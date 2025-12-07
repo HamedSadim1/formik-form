@@ -1,7 +1,7 @@
 {
   "name": "formik-form",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
     "formik": "^2.4.6",
