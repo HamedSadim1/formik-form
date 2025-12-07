@@ -1,11 +1,10 @@
-import React, { Fragment } from "react";
 import Forum from "./components/Forum";
 
 function App() {
   return (
-    <Fragment>
+    <div className="w-full max-w-md mx-auto">
       <Forum />
-    </Fragment>
+    </div>
   );
 }
 

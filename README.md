@@ -1,46 +1,142 @@
-# Getting Started with Create React App
+# Formik Form App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Een moderne, professionele React-applicatie gebouwd met Vite, TypeScript en Tailwind CSS. Deze applicatie demonstreert geavanceerde formulierbeheer met Formik, glasmorfisme UI-design en best practices voor React-ontwikkeling.
 
-## Available Scripts
+## ✨ Kenmerken
 
-In the project directory, you can run:
+- **Moderne UI/UX**: Glasmorfisme design met Tailwind CSS
+- **TypeScript**: Volledig getypeerde codebase voor betere ontwikkelervaring
+- **Formik Forms**: Robuuste formulierbeheer met validatie
+- **Component Architectuur**: Modular opgebouwde, herbruikbare componenten
+- **Responsive Design**: Optimale weergave op alle apparaten
+- **Vite Build Tool**: Snelle ontwikkelserver en geoptimaliseerde productie builds
 
-### `npm start`
+## 🛠️ Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Frontend Framework**: React 19
+- **Build Tool**: Vite 7
+- **Language**: TypeScript 5
+- **Styling**: Tailwind CSS
+- **Form Management**: Formik + Yup validation
+- **Icons**: React Icons
+- **Package Manager**: npm
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🚀 Installatie
 
-### `npm test`
+1. **Clone de repository**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   ```bash
+   git clone https://github.com/HamedSadim1/formik-form.git
+   cd formik-form
+   ```
 
-### `npm run build`
+2. **Installeer dependencies**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   ```bash
+   npm install
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **Start de ontwikkelserver**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   npm run dev
+   ```
 
-### `npm run eject`
+4. **Open in browser**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   `http://localhost:5173`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📜 Beschikbare Scripts
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- `npm run dev` - Start de ontwikkelserver
+- `npm run build` - Bouw voor productie
+- `npm run preview` - Preview productie build lokaal
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 🏗️ Project Structuur
 
-## Learn More
+```text
+src/
+├── components/          # Herbruikbare UI componenten
+│   ├── FormField.tsx    # Input veld component
+│   ├── CheckboxGroup.tsx# Checkbox groep component
+│   ├── RadioGroup.tsx   # Radio button groep component
+│   ├── SubmitButton.tsx # Submit button component
+│   ├── SuccessMessage.tsx # Succes bericht component
+│   └── Forum.tsx        # Hoofdformulier component
+├── utils/               # Hulpfuncties en configuratie
+│   └── formUtils.ts     # Form validatie en opties
+├── App.tsx              # Hoofdapplicatie component
+├── index.tsx            # Applicatie entry point
+└── index.css            # Globale styles en Tailwind imports
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🎨 UI/UX Features
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Glasmorfisme Effecten**: Moderne transparante UI elementen
+- **Responsive Layout**: Vaste breedte container voor consistente weergave
+- **Form Validation**: Real-time validatie met foutmeldingen
+- **Loading States**: Visuele feedback tijdens formulier verzending
+- **Success Animation**: Geanimeerde bevestiging na succesvolle verzending
+- **Accessibility**: Proper labels en focus management
+
+## 🔧 Ontwikkeling
+
+### Code Stijl
+
+- **DRY Principle**: Geen herhaling van code
+- **Component Composition**: Modular opgebouwde componenten
+- **Type Safety**: Geen `any` types gebruikt
+- **Clean Architecture**: Gescheiden verantwoordelijkheden
+
+### Best Practices
+
+- Functionele componenten met hooks
+- Proper TypeScript typing
+- ESLint configuratie
+- Git versiebeheer
+- Professionele project structuur
+
+## 📝 Formulier Functionaliteit
+
+Het formulier bevat:
+
+- **Naam veld**: Verplicht, max 10 karakters
+- **E-mail veld**: Verplicht, e-mail validatie
+- **Checkbox**: Enkele keuze vraag
+- **Checkbox groep**: Meerdere keuze opties (koekjes)
+- **Radio groep**: Enkele keuze opties (yoghurt)
+- **Live preview**: Toont huidige formulier waarden
+
+## 🚀 Deployment
+
+1. **Bouw voor productie**
+
+   ```bash
+   npm run build
+   ```
+
+2. **Deploy de `dist` folder** naar je hosting provider
+
+## 🤝 Bijdragen
+
+1. Fork het project
+2. Maak een feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit je wijzigingen (`git commit -m 'Add some AmazingFeature'`)
+4. Push naar de branch (`git push origin feature/AmazingFeature`)
+5. Open een Pull Request
+
+## 📄 Licentie
+
+Dit project is gelicentieerd onder de MIT License - zie het [LICENSE](LICENSE) bestand voor details.
+
+## 👨‍💻 Auteur
+
+**Hamed Sadim** - [GitHub](https://github.com/HamedSadim1)
+
+## 🙏 Erkenningen
+
+- [React](https://reactjs.org/) - De JavaScript bibliotheek voor user interfaces
+- [Vite](https://vitejs.dev/) - Next generation frontend tooling
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework
+- [Formik](https://formik.org/) - Build forms in React, without the tears
+- [React Icons](https://react-icons.github.io/react-icons/) - Popular icons in React
