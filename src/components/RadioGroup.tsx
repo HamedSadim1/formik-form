@@ -15,9 +15,7 @@ interface RadioGroupProps {
 const RadioGroup: React.FC<RadioGroupProps> = ({ name, label, options }) => {
   return (
     <div>
-      <label className="block text-white text-sm font-medium mb-3">
-        {label}
-      </label>
+      <label className="block text-white text-sm font-medium mb-3">{label}</label>
       <div className="space-y-2">
         {options.map((option) => (
           <label key={option.value} className="flex items-center space-x-2">
