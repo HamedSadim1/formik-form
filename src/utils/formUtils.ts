@@ -9,12 +9,8 @@ export interface FormValues {
 }
 
 export const validationSchema = Yup.object({
-  name: Yup.string()
-    .required("Naam is verplicht")
-    .max(10, "Maximaal 10 karakters"),
-  email: Yup.string()
-    .email("Ongeldig e-mailadres")
-    .required("E-mail is verplicht"),
+  name: Yup.string().required("Naam is verplicht").max(10, "Maximaal 10 karakters"),
+  email: Yup.string().email("Ongeldig e-mailadres").required("E-mail is verplicht"),
 });
 
 export const cookieOptions = [

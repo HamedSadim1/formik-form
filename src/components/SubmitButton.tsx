@@ -6,10 +6,7 @@ interface SubmitButtonProps {
   children: React.ReactNode;
 }
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({
-  isSubmitting,
-  children,
-}) => {
+const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitting, children }) => {
   return (
     <button
       type="submit"

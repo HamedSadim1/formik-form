@@ -1,12 +1,7 @@
 import { Field, Form, Formik } from "formik";
 import { FC, useState } from "react";
 import { FaEnvelope, FaUser } from "react-icons/fa";
-import {
-  cookieOptions,
-  FormValues,
-  validationSchema,
-  yoghurtOptions,
-} from "../utils/formUtils";
+import { cookieOptions, FormValues, validationSchema, yoghurtOptions } from "../utils/formUtils";
 import CheckboxGroup from "./CheckboxGroup";
 import FormField from "./FormField";
 import RadioGroup from "./RadioGroup";
@@ -81,18 +76,12 @@ const Forum: FC = () => {
                 options={cookieOptions}
               />
 
-              <RadioGroup
-                name="yoghurt"
-                label="Yoghurt (één keuze)"
-                options={yoghurtOptions}
-              />
+              <RadioGroup name="yoghurt" label="Yoghurt (één keuze)" options={yoghurtOptions} />
 
               <SubmitButton isSubmitting={isSubmitting}>Verzenden</SubmitButton>
 
               <div className="bg-black/20 backdrop-blur-sm border border-white/20 rounded-lg p-4 mt-6">
-                <h3 className="text-white text-sm font-medium mb-2">
-                  Huidige waarden:
-                </h3>
+                <h3 className="text-white text-sm font-medium mb-2">Huidige waarden:</h3>
                 <pre className="text-white text-xs overflow-x-auto">
                   {JSON.stringify(values, null, 2)}
                 </pre>

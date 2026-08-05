@@ -9,9 +9,7 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ onReset }) => {
   return (
     <div className="text-center py-12">
       <FaCheck className="text-green-400 text-6xl mx-auto mb-4 animate-bounce" />
-      <h2 className="text-2xl font-semibold text-white mb-2">
-        Bedankt voor je inzending!
-      </h2>
+      <h2 className="text-2xl font-semibold text-white mb-2">Bedankt voor je inzending!</h2>
       <p className="text-white/80">We nemen spoedig contact met je op.</p>
       <button
         onClick={onReset}

@@ -39,11 +39,7 @@ const FormField: React.FC<FormFieldProps> = ({
         placeholder={placeholder}
       />
       <Icon className="absolute left-4 top-11 text-white/70" />
-      <ErrorMessage
-        name={name}
-        component="div"
-        className="text-red-300 text-sm mt-1"
-      />
+      <ErrorMessage name={name} component="div" className="text-red-300 text-sm mt-1" />
     </div>
   );
 };
