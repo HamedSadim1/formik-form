@@ -1,0 +1,53 @@
+import { FC, ReactNode } from "react";
+import { FaExclamationCircle } from "react-icons/fa";
+
+interface FieldGroupProps {
+  name: string;
+  label: string;
+  required?: boolean;
+  showError?: boolean;
+  error?: string;
+  children: ReactNode;
+}
+
+/**
+ * Gedeelde wrapper voor formuliergroepen (fieldset + legende + foutmelding),
+ * gebruikt door CheckboxGroup en RadioGroup.
+ */
+const FieldGroup: FC<FieldGroupProps> = ({
+  name,
+  label,
+  required = true,
+  showError = false,
+  error,
+  children,
+}) => {
+  const errorId = `${name}-group-error`;
+
+  return (
+    <fieldset aria-describedby={showError ? errorId : undefined}>
+      <legend className="mb-3 flex items-center gap-2 text-sm font-semibold text-white/90">
+        <span className="size-1.5 rounded-full bg-primary-400" aria-hidden="true" />
+        {label}
+        {required && (
+          <span className="text-accent-400" aria-hidden="true" title="Verplicht">
+            *
+          </span>
+        )}
+      </legend>
+      {children}
+      {showError && (
+        <p
+          id={errorId}
+          role="alert"
+          className="mt-2 flex animate-fade-in items-center gap-1.5 text-xs text-red-300"
+        >
+          <FaExclamationCircle className="shrink-0" aria-hidden="true" />
+          {error}
+        </p>
+      )}
+    </fieldset>
+  );
+};
+
+export default FieldGroup;
