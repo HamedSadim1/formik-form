@@ -3,12 +3,16 @@ import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { FaEnvelope, FaUser } from "react-icons/fa";
 import { submitForm } from "../services/forumApi";
 import {
-  cookieOptions,
+  EMPTY_FORM_VALUES,
+  FIELD_NAMES,
   FormValues,
+  LABELS,
   NAME_MAX_LENGTH,
-  validationSchema,
-  yoghurtOptions,
-} from "../utils/formUtils";
+  PAGE_BADGE_TEXT,
+  PAGE_SUBTITLE,
+  PAGE_TITLE,
+} from "../utils/constants";
+import { cookieOptions, validationSchema, yoghurtOptions } from "../utils/formUtils";
 import ClearSubmitErrorOnChange from "./ClearSubmitErrorOnChange";
 import FormField from "./FormField";
 import FormHeader from "./FormHeader";
@@ -19,14 +23,6 @@ import SubmitButton from "./SubmitButton";
 import SubmitErrorBanner from "./SubmitErrorBanner";
 import SuccessMessage from "./SuccessMessage";
 import ToggleSwitch from "./ToggleSwitch";
-
-const EMPTY_FORM_VALUES: FormValues = {
-  name: "",
-  email: "",
-  isTall: false,
-  cookies: [],
-  yoghurt: "",
-};
 
 const Forum: FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -77,11 +73,7 @@ const Forum: FC = () => {
   return (
     <div className="w-full animate-fade-in-up rounded-card bg-linear-to-b from-white/25 via-white/10 to-white/5 p-px shadow-2xl shadow-black/50">
       <div className="rounded-card-inner bg-[#1d1a47]/60 p-6 backdrop-blur-2xl sm:p-8">
-        <FormHeader
-          badge="Registratie"
-          title="Mijn Forum"
-          subtitle="Vul het formulier in om deel te nemen"
-        />
+        <FormHeader badge={PAGE_BADGE_TEXT} title={PAGE_TITLE} subtitle={PAGE_SUBTITLE} />
 
         {isSubmitted && lastSubmission ? (
           <SuccessMessage
@@ -132,43 +124,43 @@ const Forum: FC = () => {
                 <ClearSubmitErrorOnChange onClear={clearSubmitError} />
                 <Form className="space-y-6">
                   <FormField
-                    name="name"
-                    label="Naam"
-                    placeholder="Voer je naam in"
+                    name={FIELD_NAMES.name}
+                    label={LABELS.fields[FIELD_NAMES.name]}
+                    placeholder={LABELS.placeholders[FIELD_NAMES.name]}
                     icon={FaUser}
-                    autoComplete="name"
+                    autoComplete={FIELD_NAMES.name}
                     required
                     maxLength={NAME_MAX_LENGTH}
                     inputRef={nameInputRef}
                   />
 
                   <FormField
-                    name="email"
-                    label="E-mail"
+                    name={FIELD_NAMES.email}
+                    label={LABELS.fields[FIELD_NAMES.email]}
                     type="email"
-                    placeholder="Voer je e-mail in"
+                    placeholder={LABELS.placeholders[FIELD_NAMES.email]}
                     icon={FaEnvelope}
-                    autoComplete="email"
+                    autoComplete={FIELD_NAMES.email}
                     required
                   />
 
                   <ToggleSwitch
-                    name="isTall"
-                    label="Ben je lang?"
-                    description="Schakel in als je lang bent"
+                    name={FIELD_NAMES.isTall}
+                    label={LABELS.fields[FIELD_NAMES.isTall]}
+                    description={LABELS.descriptions[FIELD_NAMES.isTall]}
                   />
 
                   <OptionGroup
                     type="checkbox"
-                    name="cookies"
-                    label="Koekjes (meerdere keuze)"
+                    name={FIELD_NAMES.cookies}
+                    label={LABELS.fields[FIELD_NAMES.cookies]}
                     options={cookieOptions}
                   />
 
                   <OptionGroup
                     type="radio"
-                    name="yoghurt"
-                    label="Yoghurt (één keuze)"
+                    name={FIELD_NAMES.yoghurt}
+                    label={LABELS.fields[FIELD_NAMES.yoghurt]}
                     options={yoghurtOptions}
                   />
 

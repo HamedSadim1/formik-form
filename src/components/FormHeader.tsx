@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { PAGE_TITLE_ID } from "../utils/formUtils";
+import { PAGE_TITLE_ID } from "../utils/constants";
 
 interface FormHeaderProps {
   /** Badge-tekst boven de titel (bijv. "Registratie"). */

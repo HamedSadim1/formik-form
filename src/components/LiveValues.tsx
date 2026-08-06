@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FaChevronDown } from "react-icons/fa";
-import { FormValues } from "../utils/formUtils";
+import { FormValues } from "../utils/constants";
 import { glassPanelBlur } from "../utils/uiClasses";
 import SubmissionSummary from "./SubmissionSummary";
 

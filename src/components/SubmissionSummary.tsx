@@ -1,5 +1,6 @@
 import { FC, ReactNode } from "react";
-import { cookieOptions, FormValues, getOptionLabel, yoghurtOptions } from "../utils/formUtils";
+import { EMPTY_VALUE, FormValues } from "../utils/constants";
+import { cookieOptions, getOptionLabel, yoghurtOptions } from "../utils/formUtils";
 
 interface SummaryRowProps {
   label: string;
@@ -35,10 +36,10 @@ const SubmissionSummary: FC<SubmissionSummaryProps> = ({ values }) => {
   return (
     <dl className="space-y-2.5 text-sm">
       <SummaryRow label="Naam" ddClassName="truncate font-medium text-white/90">
-        {values.name || "—"}
+        {values.name || EMPTY_VALUE}
       </SummaryRow>
       <SummaryRow label="E-mail" ddClassName="truncate font-medium text-white/90">
-        {values.email || "—"}
+        {values.email || EMPTY_VALUE}
       </SummaryRow>
       <SummaryRow label="Lang">{values.isTall ? "Ja" : "Nee"}</SummaryRow>
       <SummaryRow label="Koekjes" ddClassName="flex flex-wrap justify-end gap-1.5">
@@ -52,11 +53,11 @@ const SubmissionSummary: FC<SubmissionSummaryProps> = ({ values }) => {
             </span>
           ))
         ) : (
-          <span className="font-medium text-white/90">—</span>
+          <span className="font-medium text-white/90">{EMPTY_VALUE}</span>
         )}
       </SummaryRow>
       <SummaryRow label="Yoghurt">
-        {values.yoghurt ? getOptionLabel(yoghurtOptions, values.yoghurt) : "—"}
+        {values.yoghurt ? getOptionLabel(yoghurtOptions, values.yoghurt) : EMPTY_VALUE}
       </SummaryRow>
     </dl>
   );

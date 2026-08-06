@@ -1,6 +1,6 @@
 import { CSSProperties, FC, useEffect, useRef } from "react";
 import { FaArrowLeft, FaCheck } from "react-icons/fa";
-import { FormValues } from "../utils/formUtils";
+import { FADE_STAGGER_MS, FADE_START_MS, FormValues } from "../utils/constants";
 import {
   glassPanelBlur,
   primaryButton,
@@ -13,11 +13,9 @@ import SubmissionSummary from "./SubmissionSummary";
 // Inline animationDelay i.p.v. Tailwind-arbitrary-klassen: Tailwinds scanner
 // zou de dynamisch gebouwde `[animation-delay:...ms]`-klasse niet kunnen
 // extraheren, dus de delay komt via style — met dezelfde gecentraliseerde
-// constanten als bron van waarheid.
-const STAGGER_MS = 50;
-const FADE_START_MS = 150;
+// constanten (constants.ts) als bron van waarheid.
 const fadeDelay = (step: number): CSSProperties => ({
-  animationDelay: `${FADE_START_MS + step * STAGGER_MS}ms`,
+  animationDelay: `${FADE_START_MS + step * FADE_STAGGER_MS}ms`,
 });
 
 interface SuccessMessageProps {

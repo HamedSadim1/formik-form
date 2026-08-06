@@ -1,21 +1,23 @@
-import { FormValues } from "../utils/formUtils";
+import {
+  DEFAULT_FAILURE_RATE,
+  FAIL_PARAM,
+  FAIL_PARAM_ALWAYS,
+  FAIL_PARAM_NEVER,
+  FormValues,
+  SIMULATED_LATENCY_MS,
+} from "../utils/constants";
 
 // Gesimuleerde netwerkfout: standaard 0% — het normale pad verloopt dus
 // altijd vlekkeloos. Het error-pad (foutmelding + retry) is uitsluitend
 // triggerbaar via de URL: ?fail=always | ?fail=never | ?fail=0.5
-const DEFAULT_FAILURE_RATE = 0;
-
 const getFailureRate = (): number => {
-  const param = new URLSearchParams(window.location.search).get("fail");
+  const param = new URLSearchParams(window.location.search).get(FAIL_PARAM);
   if (!param) return DEFAULT_FAILURE_RATE;
-  if (param === "always") return 1;
-  if (param === "never") return 0;
+  if (param === FAIL_PARAM_ALWAYS) return 1;
+  if (param === FAIL_PARAM_NEVER) return 0;
   const parsed = Number(param);
   return Number.isFinite(parsed) && parsed >= 0 && parsed <= 1 ? parsed : DEFAULT_FAILURE_RATE;
 };
-
-/** Gesimuleerde netwerk-latency (ms). */
-const SIMULATED_LATENCY_MS = 1000;
 
 const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 

@@ -1,7 +1,8 @@
 import { useField } from "formik";
 import { FC, RefObject } from "react";
 import { IconType } from "react-icons";
-import { fieldErrorId, fieldId, FormValues } from "../utils/formUtils";
+import { FormValues, NEAR_LIMIT_RATIO } from "../utils/constants";
+import { fieldErrorId, fieldId } from "../utils/formUtils";
 import { sectionLabel } from "../utils/uiClasses";
 import FieldError from "./FieldError";
 import RequiredAsterisk from "./RequiredAsterisk";
@@ -44,7 +45,9 @@ const FormField: FC<FormFieldProps> = ({
   // programmatisch (setFieldValue) optreden. Amber bij het benaderen én op
   // exact de limiet (10/10 is een geldige waarde).
   const isOverLimit = maxLength ? valueLength > maxLength : false;
-  const isNearOrAtLimit = maxLength ? valueLength >= Math.round(maxLength * 0.8) : false;
+  const isNearOrAtLimit = maxLength
+    ? valueLength >= Math.round(maxLength * NEAR_LIMIT_RATIO)
+    : false;
 
   return (
     <div>

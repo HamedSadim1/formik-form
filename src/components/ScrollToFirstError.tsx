@@ -1,9 +1,7 @@
 import { useFormikContext } from "formik";
 import { FC, useEffect, useRef } from "react";
-import { fieldGroupId, fieldId, FormValues } from "../utils/formUtils";
-
-/** Volgorde waarin velden op fouten worden gecontroleerd (bovenste eerst). */
-const FIELD_ORDER: (keyof FormValues)[] = ["name", "email", "cookies", "yoghurt"];
+import { FIELD_ORDER, FormValues } from "../utils/constants";
+import { fieldGroupId, fieldId } from "../utils/formUtils";
 
 /**
  * Geeft na een mislukte submit de focus aan het eerste ongeldige veld en

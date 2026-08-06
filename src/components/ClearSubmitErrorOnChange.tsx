@@ -1,6 +1,6 @@
 import { useFormikContext } from "formik";
 import { FC, useEffect, useRef } from "react";
-import { FormValues } from "../utils/formUtils";
+import { FormValues } from "../utils/constants";
 
 interface ClearSubmitErrorOnChangeProps {
   /** Wordt aangeroepen zodra de formulierwaarden wijzigen. */

@@ -1,12 +1,5 @@
 import * as Yup from "yup";
-
-export interface FormValues {
-  name: string;
-  email: string;
-  isTall: boolean;
-  cookies: string[];
-  yoghurt: string;
-}
+import { FIELD_NAMES, LABELS, NAME_MAX_LENGTH } from "./constants";
 
 /**
  * Id-conventies voor formuliervelden en -groepen, als één bron van waarheid.
@@ -18,19 +11,15 @@ export const fieldErrorId = (name: string) => `${fieldId(name)}-error`;
 export const fieldGroupId = (name: string) => `field-group-${name}`;
 export const fieldGroupErrorId = (name: string) => `${fieldGroupId(name)}-error`;
 
-/** Id van de h1, gelinkt aan de <main>-landmark via aria-labelledby. */
-export const PAGE_TITLE_ID = "page-title";
-
-/** Enige bron van waarheid voor de naamlengte: gebruikt door Yup én de input. */
-export const NAME_MAX_LENGTH = 10;
-
 export const validationSchema = Yup.object({
-  name: Yup.string()
-    .required("Naam is verplicht")
-    .max(NAME_MAX_LENGTH, `Maximaal ${NAME_MAX_LENGTH} karakters`),
-  email: Yup.string().email("Ongeldig e-mailadres").required("E-mail is verplicht"),
-  cookies: Yup.array().of(Yup.string()).min(1, "Selecteer minstens één koekje"),
-  yoghurt: Yup.string().required("Kies een yoghurtsoort"),
+  [FIELD_NAMES.name]: Yup.string()
+    .required(LABELS.validation.nameRequired)
+    .max(NAME_MAX_LENGTH, LABELS.validation.nameMaxLength),
+  [FIELD_NAMES.email]: Yup.string()
+    .email(LABELS.validation.emailInvalid)
+    .required(LABELS.validation.emailRequired),
+  [FIELD_NAMES.cookies]: Yup.array().of(Yup.string()).min(1, LABELS.validation.cookiesMin),
+  [FIELD_NAMES.yoghurt]: Yup.string().required(LABELS.validation.yoghurtRequired),
 });
 
 /** Een keuze-optie binnen een checkbox- of radiogroep. */
