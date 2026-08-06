@@ -37,9 +37,10 @@ const FormField: FC<FormFieldProps> = ({
   const inputId = `field-${name}`;
   const errorId = `${inputId}-error`;
   const valueLength = field.value.length;
-  // Rood alleen bij daadwerkelijk overschrijden (kan alleen programmatisch,
-  // want maxLength op de input blokkeert typen voorbij de limiet); amber bij
-  // het benaderen én op exact de limiet (10/10 is een geldige waarde).
+  // Rood alleen bij daadwerkelijk overschrijden; het input-element klemt typen
+  // af op maxLength, dus overschrijding kan alleen nog via browser-autofill of
+  // programmatisch (setFieldValue) optreden. Amber bij het benaderen én op
+  // exact de limiet (10/10 is een geldige waarde).
   const isOverLimit = maxLength ? valueLength > maxLength : false;
   const isNearOrAtLimit = maxLength ? valueLength >= Math.round(maxLength * 0.8) : false;
 
@@ -78,6 +79,7 @@ const FormField: FC<FormFieldProps> = ({
           ref={inputRef}
           type={type}
           {...field}
+          maxLength={maxLength}
           autoComplete={autoComplete}
           placeholder={placeholder}
           aria-required={required || undefined}

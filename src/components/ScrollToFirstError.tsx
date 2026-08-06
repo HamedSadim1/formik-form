@@ -39,8 +39,13 @@ const ScrollToFirstError: FC = () => {
       block: "center",
     });
 
-    // focus({ preventScroll }) omdat scrollIntoView het scrollen al verzorgt
-    el.querySelector<HTMLElement>("input, select, textarea")?.focus({ preventScroll: true });
+    // focus({ preventScroll }) omdat scrollIntoView het scrollen al verzorgt.
+    // Bij tekstvelden (naam/e-mail) is `el` zelf al de input; een querySelector
+    // zoekt alleen afstammelingen en zou die dan missen.
+    const focusable: HTMLElement | null = el.matches("input, select, textarea")
+      ? el
+      : el.querySelector<HTMLElement>("input, select, textarea");
+    focusable?.focus({ preventScroll: true });
   }, [submitCount, errors]);
 
   return null;

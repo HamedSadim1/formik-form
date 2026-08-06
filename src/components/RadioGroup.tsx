@@ -39,7 +39,6 @@ const RadioGroup: FC<RadioGroupProps> = ({ name, label, options, required = true
             type="radio"
             value={option.value}
             label={option.label}
-            required={required}
           />
         ))}
       </div>

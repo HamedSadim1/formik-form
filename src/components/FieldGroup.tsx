@@ -24,15 +24,26 @@ const FieldGroup: FC<FieldGroupProps> = ({
 }) => {
   const errorId = `${name}-group-error`;
 
+  // aria-required op de group-container is een progressive enhancement; de
+  // expliciete "(verplicht)"-tekst in de legend is de betrouwbare melding voor
+  // screenreaders (aria-required wordt op de group-rol niet door elke
+  // screenreader aangekondigd, in tegenstelling tot tekst in de legend).
   return (
-    <fieldset id={`field-group-${name}`} aria-describedby={showError ? errorId : undefined}>
+    <fieldset
+      id={`field-group-${name}`}
+      aria-required={required || undefined}
+      aria-describedby={showError ? errorId : undefined}
+    >
       <legend className="mb-2.5 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-white/60">
         <span className="size-1.5 rounded-full bg-primary-400" aria-hidden="true" />
         {label}
         {required && (
-          <span className="text-accent-400" aria-hidden="true">
-            *
-          </span>
+          <>
+            <span className="text-accent-400" aria-hidden="true">
+              *
+            </span>
+            <span className="sr-only">(verplicht)</span>
+          </>
         )}
       </legend>
       {children}

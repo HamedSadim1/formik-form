@@ -1,5 +1,5 @@
-import { Field, Form, Formik } from "formik";
-import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
+import { Field, Form, Formik, useFormikContext } from "formik";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { FaEnvelope, FaExclamationTriangle, FaRedo, FaUser } from "react-icons/fa";
 import { cookieOptions, FormValues, validationSchema, yoghurtOptions } from "../utils/formUtils";
 import CheckboxGroup from "./CheckboxGroup";
@@ -35,16 +35,14 @@ const getFailureRate = (): number => {
 // Cleart de gesimuleerde netwerkfout zodra de gebruiker het formulier aanpast.
 // Zo blijft de banner niet staan als veldvalidatie de eigenlijke oorzaak is
 // geworden (bijv. een retry-knop die faalt omdat een veld ongeldig is).
-const ClearSubmitErrorOnChange: FC<{
-  values: FormValues;
-  onClear: Dispatch<SetStateAction<boolean>>;
-}> = ({ values, onClear }) => {
-  const prevValues = useRef(values);
+const ClearSubmitErrorOnChange: FC<{ onClear: () => void }> = ({ onClear }) => {
+  const { values } = useFormikContext<FormValues>();
+  const previousValues = useRef(values);
 
   useEffect(() => {
-    if (prevValues.current !== values) {
-      prevValues.current = values;
-      onClear(false);
+    if (previousValues.current !== values) {
+      previousValues.current = values;
+      onClear();
     }
   }, [values, onClear]);
 
@@ -61,6 +59,8 @@ const Forum: FC = () => {
   // dus deze state bepaalt de startwaarden van het (her)opgebouwde formulier.
   const [initialValues, setInitialValues] = useState<FormValues>(EMPTY_FORM_VALUES);
   const nameInputRef = useRef<HTMLInputElement>(null);
+  // Stabiele callback, gedeeld door onSubmit (retry) en ClearSubmitErrorOnChange.
+  const clearSubmitError = useCallback(() => setSubmitError(false), []);
 
   const returnToForm = (restore: boolean) => {
     setInitialValues(restore && lastSubmission ? lastSubmission : EMPTY_FORM_VALUES);
@@ -70,7 +70,7 @@ const Forum: FC = () => {
 
   return (
     <div className="w-full animate-fade-in-up rounded-3xl bg-linear-to-b from-white/25 via-white/10 to-white/5 p-px shadow-2xl shadow-black/50">
-      <div className="rounded-[calc(1.5rem_-_1px)] bg-[#1d1a47]/60 p-6 backdrop-blur-2xl sm:p-8">
+      <div className="rounded-[calc(1.5rem-1px)] bg-[#1d1a47]/60 p-6 backdrop-blur-2xl sm:p-8">
         <div className="mb-8 text-center">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-400/40 bg-primary-500/10 px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary-300">
             <span
@@ -101,8 +101,9 @@ const Forum: FC = () => {
             validateOnChange={false}
             validateOnBlur
             onSubmit={(values, { setSubmitting, resetForm }) => {
-              setSubmitting(true);
-              setSubmitError(false);
+              // Formik zet isSubmitting zelf al op true vóór onSubmit; alleen de
+              // foutmelding van een eerdere poging hoort hier gereset te worden.
+              clearSubmitError();
               setTimeout(() => {
                 setSubmitting(false);
                 // Gesimuleerde netwerkfout — bij falen blijven de waarden in het
@@ -122,7 +123,7 @@ const Forum: FC = () => {
             {({ values, isSubmitting }) => (
               <>
                 <ScrollToFirstError />
-                <ClearSubmitErrorOnChange values={values} onClear={setSubmitError} />
+                <ClearSubmitErrorOnChange onClear={clearSubmitError} />
                 <Form className="space-y-6">
                   <FormField
                     name="name"

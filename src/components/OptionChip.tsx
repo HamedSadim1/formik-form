@@ -7,8 +7,6 @@ interface OptionChipProps {
   value: string;
   type: "checkbox" | "radio";
   label: string;
-  /** Wordt aan de input doorgegeven als aria-required voor screenreaders. */
-  required?: boolean;
 }
 
 /**
@@ -16,7 +14,7 @@ interface OptionChipProps {
  * Verzorgt de Formik-koppeling, de selectie-indicator (per type) en de
  * checked/unchecked styling.
  */
-const OptionChip: FC<OptionChipProps> = ({ name, value, type, label, required = false }) => {
+const OptionChip: FC<OptionChipProps> = ({ name, value, type, label }) => {
   const [field] = useField({ name, type, value });
   const checked = Boolean(field.checked);
 
@@ -34,13 +32,7 @@ const OptionChip: FC<OptionChipProps> = ({ name, value, type, label, required = 
           : "border-white/10 bg-white/5 hover:border-white/25 hover:bg-white/10"
       }`}
     >
-      <input
-        type={type}
-        {...field}
-        value={value}
-        aria-required={required || undefined}
-        className="peer sr-only"
-      />
+      <input type={type} {...field} value={value} className="peer sr-only" />
       {type === "checkbox" ? (
         <span aria-hidden="true" className={`${indicatorBase} rounded-md`}>
           <FaCheck

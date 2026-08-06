@@ -16,10 +16,12 @@ interface CheckboxGroupProps {
   required?: boolean;
 }
 
+// Op mobiel altijd één kolom, zodat labels niet in smalle chips klemmen;
+// vanaf het sm-breakpoint wordt het opgegeven aantal kolommen gebruikt.
 const columnClasses: Record<NonNullable<CheckboxGroupProps["columns"]>, string> = {
   1: "grid-cols-1",
-  2: "grid-cols-2",
-  3: "grid-cols-3",
+  2: "grid-cols-1 sm:grid-cols-2",
+  3: "grid-cols-1 sm:grid-cols-3",
 };
 
 const CheckboxGroup: FC<CheckboxGroupProps> = ({
@@ -52,7 +54,6 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({
             type="checkbox"
             value={option.value}
             label={option.label}
-            required={required}
           />
         ))}
       </div>
