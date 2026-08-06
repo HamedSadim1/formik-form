@@ -1,8 +1,24 @@
-import { FC, useEffect, useRef } from "react";
+import { CSSProperties, FC, useEffect, useRef } from "react";
 import { FaArrowLeft, FaCheck } from "react-icons/fa";
-import { primaryButton, secondaryButtonStrong } from "../utils/buttonClasses";
 import { FormValues } from "../utils/formUtils";
+import {
+  glassPanelBlur,
+  primaryButton,
+  secondaryButtonStrong,
+  sectionLabel,
+} from "../utils/uiClasses";
 import SubmissionSummary from "./SubmissionSummary";
+
+// Opbouwende fade-cascade op het succes-scherm: elke stap start 50ms later.
+// Inline animationDelay i.p.v. Tailwind-arbitrary-klassen: Tailwinds scanner
+// zou de dynamisch gebouwde `[animation-delay:...ms]`-klasse niet kunnen
+// extraheren, dus de delay komt via style — met dezelfde gecentraliseerde
+// constanten als bron van waarheid.
+const STAGGER_MS = 50;
+const FADE_START_MS = 150;
+const fadeDelay = (step: number): CSSProperties => ({
+  animationDelay: `${FADE_START_MS + step * STAGGER_MS}ms`,
+});
 
 interface SuccessMessageProps {
   /** De laatst succesvol ingezonden waarden, getoond als terugblik. */
@@ -38,23 +54,25 @@ const SuccessMessage: FC<SuccessMessageProps> = ({ lastSubmission, onBackToForm,
         <h2
           ref={headingRef}
           tabIndex={-1}
-          className="mb-2 animate-fade-in-up text-2xl font-semibold text-white outline-none [animation-delay:150ms]"
+          style={fadeDelay(0)}
+          className="mb-2 animate-fade-in-up text-2xl font-semibold text-white outline-none"
         >
           Bedankt voor je inzending!
         </h2>
-        <p className="animate-fade-in-up text-white/80 [animation-delay:250ms]">
+        <p style={fadeDelay(2)} className="animate-fade-in-up text-white/80">
           We nemen spoedig contact met je op.
         </p>
       </div>
 
-      <div className="mx-auto mt-6 max-w-sm animate-fade-in-up rounded-xl border border-white/10 bg-white/5 p-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-sm [animation-delay:300ms]">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/60">
-          Jouw inzending
-        </p>
+      <div
+        style={fadeDelay(3)}
+        className={`mx-auto mt-6 max-w-sm animate-fade-in-up ${glassPanelBlur} p-4 text-left`}
+      >
+        <p className={`mb-3 ${sectionLabel}`}>Jouw inzending</p>
         <SubmissionSummary values={lastSubmission} />
       </div>
 
-      <div className="mt-8 flex animate-fade-in-up flex-col gap-3 [animation-delay:350ms]">
+      <div style={fadeDelay(4)} className="mt-8 flex animate-fade-in-up flex-col gap-3">
         <button type="button" onClick={onBackToForm} className={primaryButton}>
           <FaArrowLeft
             aria-hidden="true"

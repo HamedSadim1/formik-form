@@ -1,5 +1,24 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { cookieOptions, FormValues, getOptionLabel, yoghurtOptions } from "../utils/formUtils";
+
+interface SummaryRowProps {
+  label: string;
+  /** Overschrijf de dd-styling (bijv. bij chips of truncation). */
+  ddClassName?: string;
+  children: ReactNode;
+}
+
+/** Eén label/waarde-rij binnen het overzicht. */
+const SummaryRow: FC<SummaryRowProps> = ({
+  label,
+  ddClassName = "font-medium text-white/90",
+  children,
+}) => (
+  <div className="flex items-center justify-between gap-4">
+    <dt className="text-white/60">{label}</dt>
+    <dd className={ddClassName}>{children}</dd>
+  </div>
+);
 
 interface SubmissionSummaryProps {
   /** De weer te geven waarden (live-formulier of laatst ingezonden). */
@@ -15,41 +34,30 @@ interface SubmissionSummaryProps {
 const SubmissionSummary: FC<SubmissionSummaryProps> = ({ values }) => {
   return (
     <dl className="space-y-2.5 text-sm">
-      <div className="flex items-center justify-between gap-4">
-        <dt className="text-white/60">Naam</dt>
-        <dd className="truncate font-medium text-white/90">{values.name || "—"}</dd>
-      </div>
-      <div className="flex items-center justify-between gap-4">
-        <dt className="text-white/60">E-mail</dt>
-        <dd className="truncate font-medium text-white/90">{values.email || "—"}</dd>
-      </div>
-      <div className="flex items-center justify-between gap-4">
-        <dt className="text-white/60">Lang</dt>
-        <dd className="font-medium text-white/90">{values.isTall ? "Ja" : "Nee"}</dd>
-      </div>
-      <div className="flex items-center justify-between gap-4">
-        <dt className="text-white/60">Koekjes</dt>
-        <dd className="flex flex-wrap justify-end gap-1.5">
-          {values.cookies.length > 0 ? (
-            values.cookies.map((cookie) => (
-              <span
-                key={cookie}
-                className="rounded-full bg-primary-500/15 px-2.5 py-0.5 text-xs text-primary-200"
-              >
-                {getOptionLabel(cookieOptions, cookie)}
-              </span>
-            ))
-          ) : (
-            <span className="font-medium text-white/90">—</span>
-          )}
-        </dd>
-      </div>
-      <div className="flex items-center justify-between gap-4">
-        <dt className="text-white/60">Yoghurt</dt>
-        <dd className="font-medium text-white/90">
-          {values.yoghurt ? getOptionLabel(yoghurtOptions, values.yoghurt) : "—"}
-        </dd>
-      </div>
+      <SummaryRow label="Naam" ddClassName="truncate font-medium text-white/90">
+        {values.name || "—"}
+      </SummaryRow>
+      <SummaryRow label="E-mail" ddClassName="truncate font-medium text-white/90">
+        {values.email || "—"}
+      </SummaryRow>
+      <SummaryRow label="Lang">{values.isTall ? "Ja" : "Nee"}</SummaryRow>
+      <SummaryRow label="Koekjes" ddClassName="flex flex-wrap justify-end gap-1.5">
+        {values.cookies.length > 0 ? (
+          values.cookies.map((cookie) => (
+            <span
+              key={cookie}
+              className="rounded-full bg-primary-500/15 px-2.5 py-0.5 text-xs text-primary-200"
+            >
+              {getOptionLabel(cookieOptions, cookie)}
+            </span>
+          ))
+        ) : (
+          <span className="font-medium text-white/90">—</span>
+        )}
+      </SummaryRow>
+      <SummaryRow label="Yoghurt">
+        {values.yoghurt ? getOptionLabel(yoghurtOptions, values.yoghurt) : "—"}
+      </SummaryRow>
     </dl>
   );
 };

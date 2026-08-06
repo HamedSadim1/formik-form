@@ -1,6 +1,6 @@
 import { useFormikContext } from "formik";
 import { FC, useEffect, useRef } from "react";
-import { FormValues } from "../utils/formUtils";
+import { fieldGroupId, fieldId, FormValues } from "../utils/formUtils";
 
 /** Volgorde waarin velden op fouten worden gecontroleerd (bovenste eerst). */
 const FIELD_ORDER: (keyof FormValues)[] = ["name", "email", "cookies", "yoghurt"];
@@ -29,8 +29,8 @@ const ScrollToFirstError: FC = () => {
     lastHandledSubmit.current = submitCount;
 
     const el =
-      document.getElementById(`field-group-${firstErrorKey}`) ??
-      document.getElementById(`field-${firstErrorKey}`);
+      document.getElementById(fieldGroupId(firstErrorKey)) ??
+      document.getElementById(fieldId(firstErrorKey));
     if (!el) return;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

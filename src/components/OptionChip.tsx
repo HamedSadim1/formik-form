@@ -19,9 +19,7 @@ const OptionChip: FC<OptionChipProps> = ({ name, value, type, label }) => {
   const checked = Boolean(field.checked);
 
   const indicatorBase = `flex size-5 shrink-0 items-center justify-center border transition-all duration-200 peer-focus-visible:ring-2 peer-focus-visible:ring-white/60 ${
-    checked
-      ? "border-transparent bg-linear-to-br from-accent-500 to-primary-600"
-      : "border-white/25 bg-white/5"
+    checked ? "border-transparent primary-gradient-diagonal" : "border-white/25 bg-white/5"
   }`;
 
   return (

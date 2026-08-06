@@ -1,16 +1,20 @@
 /**
- * Gedeelde button-styling (Tailwind class-strings), zodat primaire/danger/
- * secundaire knoppen in SubmitButton, SuccessMessage en de foutbanner één
- * bron van waarheid hebben. Grootte- en layoutvariaties blijven per gebruik.
+ * Gedeelde UI-styling (Tailwind class-strings), zodat knoppen en glazen
+ * panelen in alle componenten één bron van waarheid hebben. Grootte- en
+ * layoutvariaties blijven per gebruik.
  */
 
 /**
  * Primaire gradient-knop (volle breedte): gebruikt door de submit-knop én de
  * acties op het succes-scherm. Eén padding-set, zodat de varianten niet
  * ongemerkt kunnen afwijken. `group` zit erin voor de icon-hover-animaties.
+ * De gradient zelf is de primary-gradient-utility uit index.css (SSOT).
  */
 export const primaryButton =
-  "group flex w-full items-center justify-center gap-2 rounded-xl border border-white/20 bg-linear-to-r from-accent-500 via-primary-500 to-primary-600 px-4 py-3.5 font-semibold text-white shadow-lg shadow-primary-950/50 transition duration-200 hover:from-accent-600 hover:via-primary-600 hover:to-primary-700 hover:shadow-xl hover:shadow-primary-800/50 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-400/30 disabled:cursor-not-allowed disabled:opacity-50";
+  "group flex w-full items-center justify-center gap-2 rounded-xl border border-white/20 primary-gradient px-4 py-3.5 font-semibold text-white shadow-lg shadow-primary-950/50 transition duration-200 primary-gradient-hover hover:shadow-xl hover:shadow-primary-800/50 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-400/30 disabled:cursor-not-allowed disabled:opacity-50";
+
+/** Sectielabels: veldlabels, groeps-legends en sectiekopjes (uppercase-stijl). */
+export const sectionLabel = "text-xs font-semibold uppercase tracking-wider text-white/60";
 
 /** Gevaar-variant — "Opnieuw proberen" in de foutbanner. */
 export const dangerButton =
@@ -23,3 +27,13 @@ export const secondaryButton =
 /** Steviger glas-variant — "Opnieuw invullen" op het succes-scherm. */
 export const secondaryButtonStrong =
   "w-full rounded-xl border border-white/40 bg-white/30 px-6 py-3 font-semibold text-white backdrop-blur-sm transition duration-200 hover:bg-white/40 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70";
+
+/** Glazen paneel-achtergrond (border + tint + inset highlight). */
+export const glassPanel =
+  "rounded-xl border border-white/10 bg-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]";
+
+/** Glazen paneel met backdrop-blur — gebruikt voor panels boven de achtergrond. */
+export const glassPanelBlur = `${glassPanel} backdrop-blur-sm`;
+
+/** Interactief glazen paneel (hover-staten) — gebruikt voor klikbare rijen. */
+export const glassPanelHover = `${glassPanel} transition-all duration-200 hover:border-white/25 hover:bg-white/10`;

@@ -14,6 +14,9 @@ const getFailureRate = (): number => {
   return Number.isFinite(parsed) && parsed >= 0 && parsed <= 1 ? parsed : DEFAULT_FAILURE_RATE;
 };
 
+/** Gesimuleerde netwerk-latency (ms). */
+const SIMULATED_LATENCY_MS = 1000;
+
 const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 /**
@@ -22,7 +25,7 @@ const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, 
  * blijft daardoor ongewijzigd voor de rest van de app.
  */
 export const submitForm = async (values: FormValues): Promise<void> => {
-  await wait(1000);
+  await wait(SIMULATED_LATENCY_MS);
   if (Math.random() < getFailureRate()) {
     throw new Error("Gesimuleerde netwerkfout");
   }

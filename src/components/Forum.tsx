@@ -2,18 +2,18 @@ import { Field, Form, Formik, useFormikContext } from "formik";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { FaEnvelope, FaExclamationTriangle, FaRedo, FaUser } from "react-icons/fa";
 import { submitForm } from "../services/forumApi";
-import { dangerButton, secondaryButton } from "../utils/buttonClasses";
+import { dangerButton, glassPanelHover, secondaryButton } from "../utils/uiClasses";
 import {
   cookieOptions,
   FormValues,
   NAME_MAX_LENGTH,
+  PAGE_TITLE_ID,
   validationSchema,
   yoghurtOptions,
 } from "../utils/formUtils";
-import CheckboxGroup from "./CheckboxGroup";
 import FormField from "./FormField";
 import LiveValues from "./LiveValues";
-import RadioGroup from "./RadioGroup";
+import OptionGroup from "./OptionGroup";
 import ScrollToFirstError from "./ScrollToFirstError";
 import SubmitButton from "./SubmitButton";
 import SuccessMessage from "./SuccessMessage";
@@ -90,8 +90,8 @@ const Forum: FC = () => {
   };
 
   return (
-    <div className="w-full animate-fade-in-up rounded-3xl bg-linear-to-b from-white/25 via-white/10 to-white/5 p-px shadow-2xl shadow-black/50">
-      <div className="rounded-[calc(1.5rem-1px)] bg-[#1d1a47]/60 p-6 backdrop-blur-2xl sm:p-8">
+    <div className="w-full animate-fade-in-up rounded-card bg-linear-to-b from-white/25 via-white/10 to-white/5 p-px shadow-2xl shadow-black/50">
+      <div className="rounded-card-inner bg-[#1d1a47]/60 p-6 backdrop-blur-2xl sm:p-8">
         <div className="mb-8 text-center">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-400/40 bg-primary-500/10 px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary-300">
             <span
@@ -101,7 +101,7 @@ const Forum: FC = () => {
             Registratie
           </span>
           <h1
-            id="page-title"
+            id={PAGE_TITLE_ID}
             className="mb-2 bg-linear-to-r from-white via-white to-white/60 bg-clip-text text-3xl font-bold text-transparent sm:text-4xl"
           >
             Mijn Forum
@@ -178,7 +178,9 @@ const Forum: FC = () => {
                     required
                   />
 
-                  <label className="flex cursor-pointer items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all duration-200 hover:border-white/25 hover:bg-white/10 active:scale-[0.98]">
+                  <label
+                    className={`flex cursor-pointer items-center justify-between gap-3 ${glassPanelHover} px-4 py-3.5 active:scale-[0.98]`}
+                  >
                     <span>
                       <span className="block text-sm font-medium text-white">Ben je lang?</span>
                       <span className="block text-xs text-white/60">
@@ -189,7 +191,7 @@ const Forum: FC = () => {
                       <Field id="isTall" name="isTall" type="checkbox" className="peer sr-only" />
                       <span
                         aria-hidden="true"
-                        className="h-6 w-11 rounded-full border border-white/20 bg-white/10 shadow-inner transition-colors duration-200 peer-focus-visible:ring-2 peer-focus-visible:ring-white/60 peer-checked:border-transparent peer-checked:bg-linear-to-r peer-checked:from-accent-500 peer-checked:to-primary-600"
+                        className="h-6 w-11 rounded-full border border-white/20 bg-white/10 shadow-inner transition-colors duration-200 peer-focus-visible:ring-2 peer-focus-visible:ring-white/60 peer-checked:border-transparent peer-checked:primary-gradient-compact"
                       />
                       <span
                         aria-hidden="true"
@@ -198,13 +200,19 @@ const Forum: FC = () => {
                     </span>
                   </label>
 
-                  <CheckboxGroup
+                  <OptionGroup
+                    type="checkbox"
                     name="cookies"
                     label="Koekjes (meerdere keuze)"
                     options={cookieOptions}
                   />
 
-                  <RadioGroup name="yoghurt" label="Yoghurt (één keuze)" options={yoghurtOptions} />
+                  <OptionGroup
+                    type="radio"
+                    name="yoghurt"
+                    label="Yoghurt (één keuze)"
+                    options={yoghurtOptions}
+                  />
 
                   {submitError && (
                     <div

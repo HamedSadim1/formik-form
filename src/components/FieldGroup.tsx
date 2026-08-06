@@ -1,5 +1,8 @@
 import { FC, ReactNode } from "react";
-import { FaExclamationCircle } from "react-icons/fa";
+import { fieldGroupErrorId, fieldGroupId } from "../utils/formUtils";
+import { sectionLabel } from "../utils/uiClasses";
+import FieldError from "./FieldError";
+import RequiredAsterisk from "./RequiredAsterisk";
 
 interface FieldGroupProps {
   name: string;
@@ -22,7 +25,7 @@ const FieldGroup: FC<FieldGroupProps> = ({
   error,
   children,
 }) => {
-  const errorId = `${name}-group-error`;
+  const errorId = fieldGroupErrorId(name);
 
   // Bewuste afweging: aria-required op het fieldset is officieel geen
   // ondersteund attribuut voor de group-rol (WAI-ARIA 1.2) en validatietools
@@ -33,33 +36,17 @@ const FieldGroup: FC<FieldGroupProps> = ({
   // wordt voorgelezen; aria-required is daarbovenop alleen een bonus.
   return (
     <fieldset
-      id={`field-group-${name}`}
+      id={fieldGroupId(name)}
       aria-required={required || undefined}
       aria-describedby={showError ? errorId : undefined}
     >
-      <legend className="mb-2.5 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-white/60">
+      <legend className={`mb-2.5 flex items-center gap-2 ${sectionLabel}`}>
         <span className="size-1.5 rounded-full bg-primary-400" aria-hidden="true" />
         {label}
-        {required && (
-          <>
-            <span className="text-accent-400" aria-hidden="true">
-              *
-            </span>
-            <span className="sr-only">(verplicht)</span>
-          </>
-        )}
+        {required && <RequiredAsterisk srLabel />}
       </legend>
       {children}
-      {showError && (
-        <p
-          id={errorId}
-          role="alert"
-          className="mt-2 flex animate-fade-in items-center gap-1.5 text-xs text-danger-300"
-        >
-          <FaExclamationCircle className="shrink-0" aria-hidden="true" />
-          {error}
-        </p>
-      )}
+      <FieldError id={errorId} message={showError ? error : undefined} className="mt-2" />
     </fieldset>
   );
 };

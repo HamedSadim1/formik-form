@@ -30,6 +30,10 @@
   --color-warning-300: #fcd34d;
   --color-warning-400: #fbbf24;
 
+  /* Kaart-radius + binnenkaart (1px kleiner i.v.m. de p-px-uitsparing). */
+  --radius-card: 1.5rem;
+  --radius-card-inner: calc(var(--radius-card) - 1px);
+
   --animate-fade-in-up: fade-in-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-pop-in: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   --animate-fade-in: fade-in 0.25s ease-out both;
@@ -71,6 +75,43 @@
     outline: 2px solid var(--color-accent-400);
     outline-offset: 2px;
   }
+}
+
+/*
+ * Primaire merk-gradienten als herbruikbare utilities: de kleurovergang
+ * (accent → primary) is hier de enige definitie, gebruikt door de
+ * primary-knop, de toggle-track en de optie-chips.
+ */
+@utility primary-gradient {
+  background-image: linear-gradient(
+    to right,
+    var(--color-accent-500),
+    var(--color-primary-500) 50%,
+    var(--color-primary-600)
+  );
+}
+
+@utility primary-gradient-hover {
+  &:hover {
+    background-image: linear-gradient(
+      to right,
+      var(--color-accent-600),
+      var(--color-primary-600) 50%,
+      var(--color-primary-700)
+    );
+  }
+}
+
+@utility primary-gradient-compact {
+  background-image: linear-gradient(to right, var(--color-accent-500), var(--color-primary-600));
+}
+
+@utility primary-gradient-diagonal {
+  background-image: linear-gradient(
+    to bottom right,
+    var(--color-accent-500),
+    var(--color-primary-600)
+  );
 }
 
 body {

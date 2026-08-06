@@ -1,8 +1,10 @@
 import { useField } from "formik";
 import { FC, RefObject } from "react";
-import { FaExclamationCircle } from "react-icons/fa";
 import { IconType } from "react-icons";
-import { FormValues } from "../utils/formUtils";
+import { fieldErrorId, fieldId, FormValues } from "../utils/formUtils";
+import { sectionLabel } from "../utils/uiClasses";
+import FieldError from "./FieldError";
+import RequiredAsterisk from "./RequiredAsterisk";
 
 interface FormFieldProps {
   /** Alleen tekstvelden, geen booleans — anders zou field.value.length crashen. */
@@ -34,8 +36,8 @@ const FormField: FC<FormFieldProps> = ({
   // door de blur-validatie verschijnt de groene glow pas na een geslaagde
   // validatie, nooit op nog niet gevalideerde (of ongeldige) input.
   const hasSuccess = Boolean(meta.touched && !meta.error && field.value);
-  const inputId = `field-${name}`;
-  const errorId = `${inputId}-error`;
+  const inputId = fieldId(name);
+  const errorId = fieldErrorId(name);
   const valueLength = field.value.length;
   // Rood alleen bij daadwerkelijk overschrijden; het input-element klemt typen
   // af op maxLength, dus overschrijding kan alleen nog via browser-autofill of
@@ -48,15 +50,11 @@ const FormField: FC<FormFieldProps> = ({
     <div>
       <label
         htmlFor={inputId}
-        className="mb-2.5 flex items-center justify-between gap-2 text-xs font-semibold uppercase tracking-wider text-white/60"
+        className={`mb-2.5 flex items-center justify-between gap-2 ${sectionLabel}`}
       >
         <span>
           {label}
-          {required && (
-            <span className="ml-1 text-accent-400" aria-hidden="true">
-              *
-            </span>
-          )}
+          {required && <RequiredAsterisk className="ml-1" />}
         </span>
         {maxLength && (
           <span
@@ -109,16 +107,7 @@ const FormField: FC<FormFieldProps> = ({
           }`}
         />
       </div>
-      {hasError && (
-        <p
-          id={errorId}
-          role="alert"
-          className="mt-1.5 flex animate-fade-in items-center gap-1.5 text-xs text-danger-300"
-        >
-          <FaExclamationCircle className="shrink-0" aria-hidden="true" />
-          {meta.error}
-        </p>
-      )}
+      <FieldError id={errorId} message={hasError ? meta.error : undefined} />
     </div>
   );
 };
