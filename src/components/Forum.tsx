@@ -1,22 +1,24 @@
-import { Field, Form, Formik, useFormikContext } from "formik";
+import { Form, Formik } from "formik";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
-import { FaEnvelope, FaExclamationTriangle, FaRedo, FaUser } from "react-icons/fa";
+import { FaEnvelope, FaUser } from "react-icons/fa";
 import { submitForm } from "../services/forumApi";
-import { dangerButton, glassPanelHover, secondaryButton } from "../utils/uiClasses";
 import {
   cookieOptions,
   FormValues,
   NAME_MAX_LENGTH,
-  PAGE_TITLE_ID,
   validationSchema,
   yoghurtOptions,
 } from "../utils/formUtils";
+import ClearSubmitErrorOnChange from "./ClearSubmitErrorOnChange";
 import FormField from "./FormField";
+import FormHeader from "./FormHeader";
 import LiveValues from "./LiveValues";
 import OptionGroup from "./OptionGroup";
 import ScrollToFirstError from "./ScrollToFirstError";
 import SubmitButton from "./SubmitButton";
+import SubmitErrorBanner from "./SubmitErrorBanner";
 import SuccessMessage from "./SuccessMessage";
+import ToggleSwitch from "./ToggleSwitch";
 
 const EMPTY_FORM_VALUES: FormValues = {
   name: "",
@@ -24,23 +26,6 @@ const EMPTY_FORM_VALUES: FormValues = {
   isTall: false,
   cookies: [],
   yoghurt: "",
-};
-
-// Cleart de gesimuleerde netwerkfout zodra de gebruiker het formulier aanpast.
-// Zo blijft de banner niet staan als veldvalidatie de eigenlijke oorzaak is
-// geworden (bijv. een retry-knop die faalt omdat een veld ongeldig is).
-const ClearSubmitErrorOnChange: FC<{ onClear: () => void }> = ({ onClear }) => {
-  const { values } = useFormikContext<FormValues>();
-  const previousValues = useRef(values);
-
-  useEffect(() => {
-    if (previousValues.current !== values) {
-      previousValues.current = values;
-      onClear();
-    }
-  }, [values, onClear]);
-
-  return null;
 };
 
 const Forum: FC = () => {
@@ -92,22 +77,11 @@ const Forum: FC = () => {
   return (
     <div className="w-full animate-fade-in-up rounded-card bg-linear-to-b from-white/25 via-white/10 to-white/5 p-px shadow-2xl shadow-black/50">
       <div className="rounded-card-inner bg-[#1d1a47]/60 p-6 backdrop-blur-2xl sm:p-8">
-        <div className="mb-8 text-center">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-400/40 bg-primary-500/10 px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary-300">
-            <span
-              className="size-1.5 animate-pulse rounded-full bg-primary-400"
-              aria-hidden="true"
-            />
-            Registratie
-          </span>
-          <h1
-            id={PAGE_TITLE_ID}
-            className="mb-2 bg-linear-to-r from-white via-white to-white/60 bg-clip-text text-3xl font-bold text-transparent sm:text-4xl"
-          >
-            Mijn Forum
-          </h1>
-          <p className="text-sm text-white/60">Vul het formulier in om deel te nemen</p>
-        </div>
+        <FormHeader
+          badge="Registratie"
+          title="Mijn Forum"
+          subtitle="Vul het formulier in om deel te nemen"
+        />
 
         {isSubmitted && lastSubmission ? (
           <SuccessMessage
@@ -178,27 +152,11 @@ const Forum: FC = () => {
                     required
                   />
 
-                  <label
-                    className={`flex cursor-pointer items-center justify-between gap-3 ${glassPanelHover} px-4 py-3.5 active:scale-[0.98]`}
-                  >
-                    <span>
-                      <span className="block text-sm font-medium text-white">Ben je lang?</span>
-                      <span className="block text-xs text-white/60">
-                        Schakel in als je lang bent
-                      </span>
-                    </span>
-                    <span className="relative inline-flex items-center">
-                      <Field id="isTall" name="isTall" type="checkbox" className="peer sr-only" />
-                      <span
-                        aria-hidden="true"
-                        className="h-6 w-11 rounded-full border border-white/20 bg-white/10 shadow-inner transition-colors duration-200 peer-focus-visible:ring-2 peer-focus-visible:ring-white/60 peer-checked:border-transparent peer-checked:primary-gradient-compact"
-                      />
-                      <span
-                        aria-hidden="true"
-                        className="absolute left-0.5 top-0.5 size-5 rounded-full bg-white shadow-md transition-transform duration-200 peer-checked:translate-x-5"
-                      />
-                    </span>
-                  </label>
+                  <ToggleSwitch
+                    name="isTall"
+                    label="Ben je lang?"
+                    description="Schakel in als je lang bent"
+                  />
 
                   <OptionGroup
                     type="checkbox"
@@ -215,35 +173,11 @@ const Forum: FC = () => {
                   />
 
                   {submitError && (
-                    <div
-                      ref={submitErrorRef}
-                      tabIndex={-1}
-                      className="animate-fade-in rounded-xl border border-danger-400/50 bg-danger-500/10 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
-                    >
-                      <div className="flex items-start gap-3">
-                        <FaExclamationTriangle
-                          className="mt-0.5 shrink-0 text-danger-400"
-                          aria-hidden="true"
-                        />
-                        <p role="alert" className="flex-1 text-sm text-danger-300">
-                          <span className="font-semibold">Verzenden mislukt.</span> Er is iets
-                          misgegaan bij het verzenden van je formulier. Probeer het opnieuw.
-                        </p>
-                      </div>
-                      <div className="mt-3 flex flex-wrap justify-end gap-2">
-                        <button type="submit" disabled={isSubmitting} className={dangerButton}>
-                          <FaRedo className="text-xs" aria-hidden="true" />
-                          Opnieuw proberen
-                        </button>
-                        <button
-                          type="button"
-                          onClick={closeSubmitError}
-                          className={secondaryButton}
-                        >
-                          Sluiten
-                        </button>
-                      </div>
-                    </div>
+                    <SubmitErrorBanner
+                      bannerRef={submitErrorRef}
+                      isSubmitting={isSubmitting}
+                      onClose={closeSubmitError}
+                    />
                   )}
 
                   <SubmitButton submitButtonRef={submitButtonRef} isSubmitting={isSubmitting}>

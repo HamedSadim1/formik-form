@@ -15,7 +15,7 @@ interface FieldGroupProps {
 
 /**
  * Gedeelde wrapper voor formuliergroepen (fieldset + legende + foutmelding),
- * gebruikt door CheckboxGroup en RadioGroup.
+ * gebruikt door OptionGroup (checkbox- en radioselecties).
  */
 const FieldGroup: FC<FieldGroupProps> = ({
   name,
