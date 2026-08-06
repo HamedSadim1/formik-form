@@ -1,25 +1,36 @@
-import React from "react";
-import { FaSpinner } from "react-icons/fa";
+import { FC, ReactNode, RefObject } from "react";
+import { FaPaperPlane, FaSpinner } from "react-icons/fa";
+import { LABELS } from "@/utils/constants";
+import { primaryButton } from "@/utils/uiClasses";
 
 interface SubmitButtonProps {
   isSubmitting: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
+  submitButtonRef?: RefObject<HTMLButtonElement | null>;
 }
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitting, children }) => {
+const SubmitButton: FC<SubmitButtonProps> = ({ isSubmitting, children, submitButtonRef }) => {
   return (
     <button
+      ref={submitButtonRef}
       type="submit"
       disabled={isSubmitting}
-      className="w-full py-3 bg-linear-to-r from-blue-500/80 to-purple-600/80 backdrop-blur-sm border border-white/40 rounded-lg text-white font-semibold hover:from-blue-600/80 hover:to-purple-700/80 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+      aria-busy={isSubmitting || undefined}
+      className={primaryButton}
     >
       {isSubmitting ? (
         <>
-          <FaSpinner className="animate-spin" />
-          <span>Verzenden...</span>
+          <FaSpinner className="animate-spin" aria-hidden="true" />
+          <span>{LABELS.buttons.submitBusy}</span>
         </>
       ) : (
-        <span>{children}</span>
+        <>
+          <span>{children}</span>
+          <FaPaperPlane
+            aria-hidden="true"
+            className="text-xs transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+          />
+        </>
       )}
     </button>
   );

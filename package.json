@@ -1,14 +1,16 @@
 {
   "name": "formik-form",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "type": "module",
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
+    "clsx": "^2.1.1",
     "formik": "^2.4.9",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-icons": "^5.7.0",
+    "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.3",
     "yup": "^1.7.1"
   },
@@ -20,6 +22,7 @@
     "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react": "^6.0.5",
     "eslint": "^10.8.0",
+    "eslint-plugin-import-x": "^4.17.1",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^17.9.0",
@@ -49,5 +52,8 @@
     "*.{js,mjs,cjs,json,md,html,css,yml,yaml}": [
       "prettier --write"
     ]
+  },
+  "allowScripts": {
+    "unrs-resolver@1.12.2": true
   }
 }
