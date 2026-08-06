@@ -2,7 +2,7 @@ import { useField } from "formik";
 import { FC, RefObject } from "react";
 import { IconType } from "react-icons";
 import { FormValues, NEAR_LIMIT_RATIO } from "@/utils/constants";
-import { fieldErrorId, fieldId } from "@/utils/helpers";
+import { cn, fieldErrorId, fieldId } from "@/utils/helpers";
 import { sectionLabel } from "@/utils/uiClasses";
 import FieldError from "@/components/FieldError";
 import RequiredAsterisk from "@/components/RequiredAsterisk";
@@ -53,7 +53,7 @@ const FormField: FC<FormFieldProps> = ({
     <div>
       <label
         htmlFor={inputId}
-        className={`mb-2.5 flex items-center justify-between gap-2 ${sectionLabel}`}
+        className={cn("mb-2.5 flex items-center justify-between gap-2", sectionLabel)}
       >
         <span>
           {label}
@@ -61,13 +61,14 @@ const FormField: FC<FormFieldProps> = ({
         </span>
         {maxLength && (
           <span
-            className={`text-[10px] font-medium tabular-nums tracking-normal ${
+            className={cn(
+              "text-[10px] font-medium tabular-nums tracking-normal",
               isOverLimit
                 ? "text-danger-400"
                 : isNearOrAtLimit
                   ? "text-warning-300"
-                  : "text-white/60"
-            }`}
+                  : "text-white/60",
+            )}
             aria-hidden="true"
           >
             {valueLength}/{maxLength}
@@ -86,28 +87,31 @@ const FormField: FC<FormFieldProps> = ({
           aria-required={required || undefined}
           aria-invalid={hasError || undefined}
           aria-describedby={hasError ? errorId : undefined}
-          className={`peer w-full rounded-xl border bg-white/5 py-3 pl-11 pr-4 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-sm transition duration-200 placeholder-white/60 hover:border-white/25 focus:outline-none focus:ring-4 ${
+          className={cn(
+            "peer w-full rounded-xl border bg-white/5 py-3 pl-11 pr-4 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-sm transition duration-200 placeholder-white/60 hover:border-white/25 focus:outline-none focus:ring-4",
             hasError
               ? "border-danger-400/70 focus:border-danger-400 focus:ring-danger-400/15"
               : hasSuccess
                 ? "border-success-400/50 focus:border-accent-400 focus:ring-accent-400/15"
-                : "border-white/15 focus:border-accent-400 focus:ring-accent-400/15"
-          }`}
+                : "border-white/15 focus:border-accent-400 focus:ring-accent-400/15",
+          )}
         />
         <span
           aria-hidden="true"
-          className={`pointer-events-none absolute inset-x-4 bottom-1 h-0.5 origin-center scale-x-0 rounded-full transition-transform duration-300 peer-focus:scale-x-100 ${
+          className={cn(
+            "pointer-events-none absolute inset-x-4 bottom-1 h-0.5 origin-center scale-x-0 rounded-full transition-transform duration-300 peer-focus:scale-x-100",
             hasError
               ? "bg-danger-400"
-              : "bg-linear-to-r from-accent-500 via-primary-500 to-accent-500"
-          }`}
+              : "bg-linear-to-r from-accent-500 via-primary-500 to-accent-500",
+          )}
         />
         <Icon
-          className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm transition-all duration-200 peer-focus:scale-110 ${
+          className={cn(
+            "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm transition-all duration-200 peer-focus:scale-110",
             hasError
               ? "text-danger-400/80 peer-focus:text-danger-400"
-              : "text-white/60 peer-focus:text-accent-400"
-          }`}
+              : "text-white/60 peer-focus:text-accent-400",
+          )}
         />
       </div>
       <FieldError id={errorId} message={hasError ? meta.error : undefined} />

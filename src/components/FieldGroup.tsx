@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { fieldGroupErrorId, fieldGroupId } from "@/utils/helpers";
+import { cn, fieldGroupErrorId, fieldGroupId } from "@/utils/helpers";
 import { sectionLabel } from "@/utils/uiClasses";
 import FieldError from "@/components/FieldError";
 import RequiredAsterisk from "@/components/RequiredAsterisk";
@@ -40,7 +40,7 @@ const FieldGroup: FC<FieldGroupProps> = ({
       aria-required={required || undefined}
       aria-describedby={showError ? errorId : undefined}
     >
-      <legend className={`mb-2.5 flex items-center gap-2 ${sectionLabel}`}>
+      <legend className={cn("mb-2.5 flex items-center gap-2", sectionLabel)}>
         <span className="size-1.5 rounded-full bg-primary-400" aria-hidden="true" />
         {label}
         {required && <RequiredAsterisk srLabel />}

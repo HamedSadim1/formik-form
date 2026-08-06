@@ -1,5 +1,6 @@
 import { useField } from "formik";
 import { FC } from "react";
+import { cn } from "@/utils/helpers";
 import { glassPanelHover } from "@/utils/uiClasses";
 
 interface ToggleSwitchProps {
@@ -23,7 +24,11 @@ const ToggleSwitch: FC<ToggleSwitchProps> = ({ name, label, description }) => {
 
   return (
     <label
-      className={`flex cursor-pointer items-center justify-between gap-3 ${glassPanelHover} px-4 py-3.5 active:scale-[0.98]`}
+      className={cn(
+        "flex cursor-pointer items-center justify-between gap-3",
+        glassPanelHover,
+        "px-4 py-3.5 active:scale-[0.98]",
+      )}
     >
       <span>
         <span className="block text-sm font-medium text-white">{label}</span>

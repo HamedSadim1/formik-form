@@ -27,6 +27,19 @@ export const fieldErrorId = (name: string): string => `${fieldId(name)}-error`;
 export const fieldGroupId = (name: string): string => `field-group-${name}`;
 export const fieldGroupErrorId = (name: string): string => `${fieldGroupId(name)}-error`;
 
+/* ===== ClassNames ===== */
+
+/** Waarden die cn() combineert; falsy waarden worden overgeslagen. */
+export type ClassValue = string | false | null | undefined;
+
+/**
+ * Combineert Tailwind-klassen tot één string — dependency-vrije variant van
+ * clsx. Falsy waarden (false/null/undefined) worden overgeslagen, zodat
+ * conditionele klassen zonder template-literal-interpolatie kunnen.
+ */
+export const cn = (...classes: ClassValue[]): string =>
+  classes.filter((value): value is string => Boolean(value)).join(" ");
+
 /* ===== Opmaak ===== */
 
 /**

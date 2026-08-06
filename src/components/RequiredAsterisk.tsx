@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { LABELS } from "@/utils/constants";
+import { cn } from "@/utils/helpers";
 
 interface RequiredAsteriskProps {
   /** Extra klassen (bijv. marge vóór de ster). */
@@ -14,7 +15,7 @@ interface RequiredAsteriskProps {
  */
 const RequiredAsterisk: FC<RequiredAsteriskProps> = ({ className, srLabel = false }) => (
   <>
-    <span className={`text-accent-400${className ? ` ${className}` : ""}`} aria-hidden="true">
+    <span className={cn("text-accent-400", className)} aria-hidden="true">
       *
     </span>
     {srLabel && <span className="sr-only">{LABELS.a11y.requiredLabel}</span>}

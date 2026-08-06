@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { FaExclamationCircle } from "react-icons/fa";
+import { cn } from "@/utils/helpers";
 
 interface FieldErrorProps {
   id?: string;
@@ -18,7 +19,7 @@ const FieldError: FC<FieldErrorProps> = ({ id, message, className = "mt-1.5" }) 
     <p
       id={id}
       role="alert"
-      className={`flex animate-fade-in items-center gap-1.5 text-xs text-danger-300 ${className}`}
+      className={cn("flex animate-fade-in items-center gap-1.5 text-xs text-danger-300", className)}
     >
       <FaExclamationCircle className="shrink-0" aria-hidden="true" />
       {message}

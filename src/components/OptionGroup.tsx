@@ -1,5 +1,6 @@
 import { useField, useFormikContext } from "formik";
 import { FC, useEffect } from "react";
+import { cn } from "@/utils/helpers";
 import { Option } from "@/utils/formUtils";
 import { optionColumnClasses, OptionColumns } from "@/utils/uiClasses";
 import FieldGroup from "@/components/FieldGroup";
@@ -50,11 +51,11 @@ const OptionGroup: FC<OptionGroupProps> = ({
       error={meta.error}
     >
       <div
-        className={`${
-          type === "checkbox" ? `grid ${optionColumnClasses[columns]} gap-2.5` : "space-y-2.5"
-        } rounded-xl ring-1 transition-all duration-200 ${
-          showError ? "ring-danger-400/60" : "ring-transparent"
-        }`}
+        className={cn(
+          type === "checkbox" ? cn("grid", optionColumnClasses[columns], "gap-2.5") : "space-y-2.5",
+          "rounded-xl ring-1 transition-all duration-200",
+          showError ? "ring-danger-400/60" : "ring-transparent",
+        )}
       >
         {options.map((option) => (
           <OptionChip

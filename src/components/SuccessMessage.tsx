@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef } from "react";
 import { FaArrowLeft, FaCheck } from "react-icons/fa";
 import { FormValues, LABELS } from "@/utils/constants";
-import { fadeDelay } from "@/utils/helpers";
+import { cn, fadeDelay } from "@/utils/helpers";
 import {
   glassPanelBlur,
   primaryButton,
@@ -56,9 +56,9 @@ const SuccessMessage: FC<SuccessMessageProps> = ({ lastSubmission, onBackToForm,
 
       <div
         style={fadeDelay(3)}
-        className={`mx-auto mt-6 max-w-sm animate-fade-in-up ${glassPanelBlur} p-4 text-left`}
+        className={cn("mx-auto mt-6 max-w-sm animate-fade-in-up", glassPanelBlur, "p-4 text-left")}
       >
-        <p className={`mb-3 ${sectionLabel}`}>{LABELS.success.summarySection}</p>
+        <p className={cn("mb-3", sectionLabel)}>{LABELS.success.summarySection}</p>
         <SubmissionSummary values={lastSubmission} />
       </div>
 

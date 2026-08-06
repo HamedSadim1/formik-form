@@ -3,6 +3,7 @@
  * panelen in alle componenten één bron van waarheid hebben. Grootte- en
  * layoutvariaties blijven per gebruik.
  */
+import { cn } from "@/utils/helpers";
 
 /**
  * Primaire gradient-knop (volle breedte): gebruikt door de submit-knop én de
@@ -33,10 +34,13 @@ export const glassPanel =
   "rounded-xl border border-white/10 bg-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]";
 
 /** Glazen paneel met backdrop-blur — gebruikt voor panels boven de achtergrond. */
-export const glassPanelBlur = `${glassPanel} backdrop-blur-sm`;
+export const glassPanelBlur = cn(glassPanel, "backdrop-blur-sm");
 
 /** Interactief glazen paneel (hover-staten) — gebruikt voor klikbare rijen. */
-export const glassPanelHover = `${glassPanel} transition-all duration-200 hover:border-white/25 hover:bg-white/10`;
+export const glassPanelHover = cn(
+  glassPanel,
+  "transition-all duration-200 hover:border-white/25 hover:bg-white/10",
+);
 
 /* ===== Optiegroepen ===== */
 
