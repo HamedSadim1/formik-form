@@ -25,12 +25,12 @@ const FieldGroup: FC<FieldGroupProps> = ({
   const errorId = `${name}-group-error`;
 
   return (
-    <fieldset aria-describedby={showError ? errorId : undefined}>
-      <legend className="mb-3 flex items-center gap-2 text-sm font-semibold text-white/90">
+    <fieldset id={`field-group-${name}`} aria-describedby={showError ? errorId : undefined}>
+      <legend className="mb-2.5 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-white/60">
         <span className="size-1.5 rounded-full bg-primary-400" aria-hidden="true" />
         {label}
         {required && (
-          <span className="text-accent-400" aria-hidden="true" title="Verplicht">
+          <span className="text-accent-400" aria-hidden="true">
             *
           </span>
         )}
@@ -40,7 +40,7 @@ const FieldGroup: FC<FieldGroupProps> = ({
         <p
           id={errorId}
           role="alert"
-          className="mt-2 flex animate-fade-in items-center gap-1.5 text-xs text-red-300"
+          className="mt-2 flex animate-fade-in items-center gap-1.5 text-xs text-danger-300"
         >
           <FaExclamationCircle className="shrink-0" aria-hidden="true" />
           {error}

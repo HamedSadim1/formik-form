@@ -27,3 +27,12 @@ export const yoghurtOptions = [
   { value: "blueberry", label: "Blauwe bes" },
   { value: "apple", label: "Appel" },
 ];
+
+interface Option {
+  value: string;
+  label: string;
+}
+
+/** Vertaalt een opgeslagen waarde terug naar het leesbare label; valt terug op de waarde zelf. */
+export const getOptionLabel = (options: readonly Option[], value: string): string =>
+  options.find((option) => option.value === value)?.label ?? value;

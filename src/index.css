@@ -16,6 +16,18 @@
   --color-accent-600: #2563eb;
   --color-accent-700: #1d4ed8;
 
+  /* Semantische status-kleuren (consistent in de hele app) */
+  --color-success-300: #6ee7b7;
+  --color-success-400: #34d399;
+  --color-success-500: #10b981;
+
+  --color-danger-300: #fca5a5;
+  --color-danger-400: #f87171;
+  --color-danger-500: #ef4444;
+
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+
   --animate-fade-in-up: fade-in-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-pop-in: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   --animate-fade-in: fade-in 0.25s ease-out both;

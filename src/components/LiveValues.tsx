@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FaChevronDown } from "react-icons/fa";
-import { FormValues } from "../utils/formUtils";
+import { cookieOptions, FormValues, getOptionLabel, yoghurtOptions } from "../utils/formUtils";
 
 interface LiveValuesProps {
   values: FormValues;
@@ -12,7 +12,7 @@ const LiveValues: FC<LiveValuesProps> = ({ values }) => {
       <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-white/10 [&::-webkit-details-marker]:hidden">
         Huidige waarden
         <FaChevronDown
-          className="text-white/60 transition-transform duration-200 group-open:rotate-180"
+          className="text-white/70 transition-transform duration-200 group-open:rotate-180"
           aria-hidden="true"
         />
       </summary>
@@ -38,17 +38,19 @@ const LiveValues: FC<LiveValuesProps> = ({ values }) => {
                   key={cookie}
                   className="rounded-full bg-primary-500/15 px-2.5 py-0.5 text-xs text-primary-200"
                 >
-                  {cookie}
+                  {getOptionLabel(cookieOptions, cookie)}
                 </span>
               ))
             ) : (
-              <span className="text-white/50">—</span>
+              <span className="text-white/60">—</span>
             )}
           </dd>
         </div>
         <div className="flex items-center justify-between gap-4">
           <dt className="text-white/60">Yoghurt</dt>
-          <dd className="text-white/90">{values.yoghurt || "—"}</dd>
+          <dd className="text-white/90">
+            {values.yoghurt ? getOptionLabel(yoghurtOptions, values.yoghurt) : "—"}
+          </dd>
         </div>
       </dl>
     </details>
