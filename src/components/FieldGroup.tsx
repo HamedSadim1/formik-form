@@ -24,10 +24,13 @@ const FieldGroup: FC<FieldGroupProps> = ({
 }) => {
   const errorId = `${name}-group-error`;
 
-  // aria-required op de group-container is een progressive enhancement; de
-  // expliciete "(verplicht)"-tekst in de legend is de betrouwbare melding voor
-  // screenreaders (aria-required wordt op de group-rol niet door elke
-  // screenreader aangekondigd, in tegenstelling tot tekst in de legend).
+  // Bewuste afweging: aria-required op het fieldset is officieel geen
+  // ondersteund attribuut voor de group-rol (WAI-ARIA 1.2) en validatietools
+  // zoals axe vlaggen het als aria-allowed-attr. Toch is het bewust toegevoegd
+  // als progressive enhancement: sommige screenreaders kondigen de
+  // groepsverplichting er wél mee aan. De betrouwbare aankondiging is de
+  // expliciete "(verplicht)"-tekst in de legend, die door alle screenreaders
+  // wordt voorgelezen; aria-required is daarbovenop alleen een bonus.
   return (
     <fieldset
       id={`field-group-${name}`}

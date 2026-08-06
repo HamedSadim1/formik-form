@@ -1,7 +1,15 @@
 import { Field, Form, Formik, useFormikContext } from "formik";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { FaEnvelope, FaExclamationTriangle, FaRedo, FaUser } from "react-icons/fa";
-import { cookieOptions, FormValues, validationSchema, yoghurtOptions } from "../utils/formUtils";
+import { submitForm } from "../services/forumApi";
+import { dangerButton, secondaryButton } from "../utils/buttonClasses";
+import {
+  cookieOptions,
+  FormValues,
+  NAME_MAX_LENGTH,
+  validationSchema,
+  yoghurtOptions,
+} from "../utils/formUtils";
 import CheckboxGroup from "./CheckboxGroup";
 import FormField from "./FormField";
 import LiveValues from "./LiveValues";
@@ -16,20 +24,6 @@ const EMPTY_FORM_VALUES: FormValues = {
   isTall: false,
   cookies: [],
   yoghurt: "",
-};
-
-// Gesimuleerde netwerkfout: standaard 0% — het normale pad verloopt dus
-// altijd vlekkeloos. Het error-pad (foutmelding + retry) is uitsluitend
-// triggerbaar via de URL: ?fail=always | ?fail=never | ?fail=0.5
-const DEFAULT_FAILURE_RATE = 0;
-
-const getFailureRate = (): number => {
-  const param = new URLSearchParams(window.location.search).get("fail");
-  if (!param) return DEFAULT_FAILURE_RATE;
-  if (param === "always") return 1;
-  if (param === "never") return 0;
-  const parsed = Number(param);
-  return Number.isFinite(parsed) && parsed >= 0 && parsed <= 1 ? parsed : DEFAULT_FAILURE_RATE;
 };
 
 // Cleart de gesimuleerde netwerkfout zodra de gebruiker het formulier aanpast.
@@ -53,17 +47,34 @@ const Forum: FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [lastSubmission, setLastSubmission] = useState<FormValues | null>(null);
   const [submitError, setSubmitError] = useState(false);
-  // Eenmalig gelezen; de ?fail= param maakt het error-pad deterministisch testbaar.
-  const [failureRate] = useState(getFailureRate);
   // Formik mount opnieuw bij het wisselen tussen succes- en formulierweergave,
   // dus deze state bepaalt de startwaarden van het (her)opgebouwde formulier.
   const [initialValues, setInitialValues] = useState<FormValues>(EMPTY_FORM_VALUES);
   const nameInputRef = useRef<HTMLInputElement>(null);
+  const submitErrorRef = useRef<HTMLDivElement>(null);
   // Stabiele callback, gedeeld door onSubmit (retry) en ClearSubmitErrorOnChange.
   const clearSubmitError = useCallback(() => setSubmitError(false), []);
 
+  // Verplaats de focus naar de foutbanner zodat toetsenbordgebruikers direct
+  // "Opnieuw proberen" of "Sluiten" kunnen bereiken.
+  useEffect(() => {
+    if (submitError) submitErrorRef.current?.focus();
+  }, [submitError]);
+
+  // Escape sluit de foutbanner, ook als de focus elders ligt.
+  useEffect(() => {
+    if (!submitError) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") clearSubmitError();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [submitError, clearSubmitError]);
+
   const returnToForm = (restore: boolean) => {
-    setInitialValues(restore && lastSubmission ? lastSubmission : EMPTY_FORM_VALUES);
+    // Kopieer de inzending, zodat een eventuele latere mutatie van values de
+    // terugblik (lastSubmission) niet kan aantasten.
+    setInitialValues(restore && lastSubmission ? { ...lastSubmission } : EMPTY_FORM_VALUES);
     setIsSubmitted(false);
     requestAnimationFrame(() => nameInputRef.current?.focus());
   };
@@ -79,7 +90,10 @@ const Forum: FC = () => {
             />
             Registratie
           </span>
-          <h1 className="mb-2 bg-linear-to-r from-white via-white to-white/60 bg-clip-text text-3xl font-bold text-transparent sm:text-4xl">
+          <h1
+            id="page-title"
+            className="mb-2 bg-linear-to-r from-white via-white to-white/60 bg-clip-text text-3xl font-bold text-transparent sm:text-4xl"
+          >
             Mijn Forum
           </h1>
           <p className="text-sm text-white/60">Vul het formulier in om deel te nemen</p>
@@ -100,24 +114,27 @@ const Forum: FC = () => {
             // verschijnt. Validatie op change is daarvoor uitgeschakeld.
             validateOnChange={false}
             validateOnBlur
-            onSubmit={(values, { setSubmitting, resetForm }) => {
-              // Formik zet isSubmitting zelf al op true vóór onSubmit; alleen de
-              // foutmelding van een eerdere poging hoort hier gereset te worden.
+            onSubmit={async (values, { setSubmitting, resetForm }) => {
+              // Formik zet isSubmitting zelf al op true vóór onSubmit én
+              // blokkeert dubbel-submit natively in handleSubmit (plus: de
+              // knop is tijdens submit disabled). Alleen de foutmelding van
+              // een eerdere poging hoort hier gereset te worden.
               clearSubmitError();
-              setTimeout(() => {
+              try {
+                await submitForm(values);
+              } catch {
+                // Gesimuleerde netwerkfout — bij falen blijven de waarden in
+                // het formulier staan, zodat direct opnieuw proberen mogelijk is.
+                setSubmitError(true);
+                return;
+              } finally {
                 setSubmitting(false);
-                // Gesimuleerde netwerkfout — bij falen blijven de waarden in het
-                // formulier staan, zodat direct opnieuw proberen mogelijk is.
-                if (Math.random() < failureRate) {
-                  setSubmitError(true);
-                  return;
-                }
-                // Bewaar de inzending zodat het succes-scherm een terugblik
-                // toont en "Terug naar mijn formulier" de waarden herstelt.
-                setLastSubmission(values);
-                setIsSubmitted(true);
-                resetForm();
-              }, 1000);
+              }
+              // Bewaar de inzending zodat het succes-scherm een terugblik
+              // toont en "Terug naar mijn formulier" de waarden herstelt.
+              setLastSubmission(values);
+              setIsSubmitted(true);
+              resetForm();
             }}
           >
             {({ values, isSubmitting }) => (
@@ -132,7 +149,7 @@ const Forum: FC = () => {
                     icon={FaUser}
                     autoComplete="name"
                     required
-                    maxLength={10}
+                    maxLength={NAME_MAX_LENGTH}
                     inputRef={nameInputRef}
                   />
 
@@ -146,7 +163,7 @@ const Forum: FC = () => {
                     required
                   />
 
-                  <label className="flex cursor-pointer items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all duration-200 hover:border-white/25 hover:bg-white/10 active:scale-[0.99]">
+                  <label className="flex cursor-pointer items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all duration-200 hover:border-white/25 hover:bg-white/10 active:scale-[0.98]">
                     <span>
                       <span className="block text-sm font-medium text-white">Ben je lang?</span>
                       <span className="block text-xs text-white/60">
@@ -175,7 +192,11 @@ const Forum: FC = () => {
                   <RadioGroup name="yoghurt" label="Yoghurt (één keuze)" options={yoghurtOptions} />
 
                   {submitError && (
-                    <div className="animate-fade-in rounded-xl border border-danger-400/50 bg-danger-500/10 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+                    <div
+                      ref={submitErrorRef}
+                      tabIndex={-1}
+                      className="animate-fade-in rounded-xl border border-danger-400/50 bg-danger-500/10 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+                    >
                       <div className="flex items-start gap-3">
                         <FaExclamationTriangle
                           className="mt-0.5 shrink-0 text-danger-400"
@@ -187,17 +208,14 @@ const Forum: FC = () => {
                         </p>
                       </div>
                       <div className="mt-3 flex flex-wrap justify-end gap-2">
-                        <button
-                          type="submit"
-                          className="inline-flex items-center gap-2 rounded-xl border border-danger-400/40 bg-danger-500/20 px-4 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-danger-500/30 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger-400/40"
-                        >
+                        <button type="submit" className={dangerButton}>
                           <FaRedo className="text-xs" aria-hidden="true" />
                           Opnieuw proberen
                         </button>
                         <button
                           type="button"
                           onClick={() => setSubmitError(false)}
-                          className="rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white/80 transition duration-200 hover:bg-white/20 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                          className={secondaryButton}
                         >
                           Sluiten
                         </button>

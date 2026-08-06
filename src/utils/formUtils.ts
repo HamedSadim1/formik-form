@@ -8,8 +8,13 @@ export interface FormValues {
   yoghurt: string;
 }
 
+/** Enige bron van waarheid voor de naamlengte: gebruikt door Yup én de input. */
+export const NAME_MAX_LENGTH = 10;
+
 export const validationSchema = Yup.object({
-  name: Yup.string().required("Naam is verplicht").max(10, "Maximaal 10 karakters"),
+  name: Yup.string()
+    .required("Naam is verplicht")
+    .max(NAME_MAX_LENGTH, `Maximaal ${NAME_MAX_LENGTH} karakters`),
   email: Yup.string().email("Ongeldig e-mailadres").required("E-mail is verplicht"),
   cookies: Yup.array().of(Yup.string()).min(1, "Selecteer minstens één koekje"),
   yoghurt: Yup.string().required("Kies een yoghurtsoort"),

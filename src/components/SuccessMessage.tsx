@@ -1,5 +1,6 @@
 import { FC, useEffect, useRef } from "react";
 import { FaArrowLeft, FaCheck } from "react-icons/fa";
+import { primaryButton, secondaryButtonStrong } from "../utils/buttonClasses";
 import { cookieOptions, FormValues, getOptionLabel, yoghurtOptions } from "../utils/formUtils";
 
 interface SuccessMessageProps {
@@ -87,22 +88,14 @@ const SuccessMessage: FC<SuccessMessageProps> = ({ lastSubmission, onBackToForm,
       </div>
 
       <div className="mt-8 flex animate-fade-in-up flex-col gap-3 [animation-delay:350ms]">
-        <button
-          type="button"
-          onClick={onBackToForm}
-          className="group flex w-full items-center justify-center gap-2 rounded-xl border border-white/20 bg-linear-to-r from-accent-500 via-primary-500 to-primary-600 px-6 py-3 font-semibold text-white shadow-lg shadow-primary-950/50 transition duration-200 hover:from-accent-600 hover:via-primary-600 hover:to-primary-700 hover:shadow-xl hover:shadow-primary-800/50 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary-400/30"
-        >
+        <button type="button" onClick={onBackToForm} className={primaryButton}>
           <FaArrowLeft
             aria-hidden="true"
             className="text-xs transition-transform duration-200 group-hover:-translate-x-0.5"
           />
           Terug naar mijn formulier
         </button>
-        <button
-          type="button"
-          onClick={onReset}
-          className="w-full rounded-xl border border-white/40 bg-white/30 px-6 py-3 font-semibold text-white backdrop-blur-sm transition duration-200 hover:bg-white/40 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-        >
+        <button type="button" onClick={onReset} className={secondaryButtonStrong}>
           Opnieuw invullen
         </button>
       </div>
