@@ -18,10 +18,10 @@ const EMPTY_FORM_VALUES: FormValues = {
   yoghurt: "",
 };
 
-// Gesimuleerde netwerkfout: standaard 15% kans op een mislukte verzending,
-// zodat het error-pad (foutmelding + retry) in de demo getest kan worden.
-// Deterministisch testbaar via de URL: ?fail=always | ?fail=never | ?fail=0.5
-const DEFAULT_FAILURE_RATE = 0.15;
+// Gesimuleerde netwerkfout: standaard 0% — het normale pad verloopt dus
+// altijd vlekkeloos. Het error-pad (foutmelding + retry) is uitsluitend
+// triggerbaar via de URL: ?fail=always | ?fail=never | ?fail=0.5
+const DEFAULT_FAILURE_RATE = 0;
 
 const getFailureRate = (): number => {
   const param = new URLSearchParams(window.location.search).get("fail");
@@ -95,9 +95,10 @@ const Forum: FC = () => {
           <Formik<FormValues>
             initialValues={initialValues}
             validationSchema={validationSchema}
-            // Live validatie op change: een fout tijdens het typen wordt meteen
-            // zichtbaar, dus de succes-glow verschijnt nooit op ongeldige input.
-            validateOnChange
+            // Fouten pas tonen na blur (en bij submit): tijdens het typen blijft
+            // het veld rustig, zodat er geen error-flash midden in het typen
+            // verschijnt. Validatie op change is daarvoor uitgeschakeld.
+            validateOnChange={false}
             validateOnBlur
             onSubmit={(values, { setSubmitting, resetForm }) => {
               setSubmitting(true);
@@ -144,17 +145,14 @@ const Forum: FC = () => {
                     required
                   />
 
-                  <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors duration-200 hover:border-white/25 hover:bg-white/10">
-                    <div>
+                  <label className="flex cursor-pointer items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all duration-200 hover:border-white/25 hover:bg-white/10 active:scale-[0.99]">
+                    <span>
                       <span className="block text-sm font-medium text-white">Ben je lang?</span>
                       <span className="block text-xs text-white/60">
                         Schakel in als je lang bent
                       </span>
-                    </div>
-                    <label
-                      htmlFor="isTall"
-                      className="relative inline-flex cursor-pointer items-center transition-transform duration-200 active:scale-[0.98]"
-                    >
+                    </span>
+                    <span className="relative inline-flex items-center">
                       <Field id="isTall" name="isTall" type="checkbox" className="peer sr-only" />
                       <span
                         aria-hidden="true"
@@ -164,8 +162,8 @@ const Forum: FC = () => {
                         aria-hidden="true"
                         className="absolute left-0.5 top-0.5 size-5 rounded-full bg-white shadow-md transition-transform duration-200 peer-checked:translate-x-5"
                       />
-                    </label>
-                  </div>
+                    </span>
+                  </label>
 
                   <CheckboxGroup
                     name="cookies"
@@ -208,7 +206,8 @@ const Forum: FC = () => {
 
                   <SubmitButton isSubmitting={isSubmitting}>Verzenden</SubmitButton>
 
-                  <LiveValues values={values} />
+                  {/* Debug-paneel: alleen zichtbaar in development, niet in productie. */}
+                  {import.meta.env.DEV && <LiveValues values={values} />}
                 </Form>
               </>
             )}

@@ -88,9 +88,9 @@ src/
 - **Custom Form Controls**: Gradient checkboxes/radios met selectie-highlight en focusring
 - **Micro-interacties**: Focus-underline die aangroeit, icon-scale, verzend-icoon dat glijdt, press-feedback
 - **Karakterteller**: Live `0/10`-teller die amber kleurt bij het benaderen én op de limiet, rood alleen bij overschrijden
-- **Validatie**: Real-time foutmeldingen met `role="alert"` en error-ring op groepen
+- **Validatie**: Foutmeldingen na blur en bij submit met `role="alert"` en error-ring op groepen
 - **Loading States**: Visuele feedback met spinner tijdens formulier verzending
-- **Fout-staat**: Gesimuleerde verzendfout (15% kans) met `role="alert"`-melding, retry- en sluitknop
+- **Fout-staat**: Gesimuleerde verzendfout (alleen via `?fail=` URL-param) met `role="alert"`-melding, retry- en sluitknop
 - **Success Animation**: Gepulste ring en staggered entree na succesvolle verzending
 - **Inzending-overzicht**: Succes-scherm toont een terugblik op je inzending; "Terug naar mijn formulier" herstelt de waarden in het formulier
 - **Responsive Layout**: Vloeiende breedte met responsive padding op mobiel
@@ -131,9 +131,9 @@ Het formulier bevat:
 - **Toggle**: "Ben je lang?" schakelaar
 - **Checkbox groep**: Koekjes — verplicht, minstens één keuze
 - **Radio groep**: Yoghurt — verplicht, één keuze
-- **Live preview**: Opvouwbare samenvatting van de huidige formulierwaarden
+- **Live preview** _(alleen dev)_: Opvouwbare samenvatting van de huidige formulierwaarden — verborgen in productie via `import.meta.env.DEV`
 - **Succes-flow**: Na verzending een samenvatting van je inzending; "Terug naar mijn formulier" hervult het formulier, "Opnieuw invullen" start leeg
-- **Gesimuleerde fout**: 15% kans op mislukte verzending met foutmelding en retry — deterministisch testbaar via `?fail=always`, `?fail=never` of `?fail=0.5`
+- **Gesimuleerde fout**: standaard geen fout; mislukte verzending is uitsluitend triggerbaar via `?fail=always`, `?fail=never` of `?fail=0.5` (met foutmelding en retry)
 
 ## 🚀 Deployment
 

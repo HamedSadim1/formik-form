@@ -30,9 +30,9 @@ const FormField: FC<FormFieldProps> = ({
 }) => {
   const [field, meta] = useField<string>(name);
   const hasError = Boolean(meta.touched && meta.error);
-  // Successtyling pas tonen wanneer het veld is aangeraakt én gevalideerd is
-  // (validateOnChange): een fout die tijdens het typen ontstaat wordt dan
-  // onmiddellijk als error getoond in plaats van als valse groene glow.
+  // Successtyling pas tonen wanneer het veld is aangeraakt én gevalideerd is:
+  // door de blur-validatie verschijnt de groene glow pas na een geslaagde
+  // validatie, nooit op nog niet gevalideerde (of ongeldige) input.
   const hasSuccess = Boolean(meta.touched && !meta.error && field.value);
   const inputId = `field-${name}`;
   const errorId = `${inputId}-error`;
