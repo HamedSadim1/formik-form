@@ -52,8 +52,18 @@ const Forum: FC = () => {
   const [initialValues, setInitialValues] = useState<FormValues>(EMPTY_FORM_VALUES);
   const nameInputRef = useRef<HTMLInputElement>(null);
   const submitErrorRef = useRef<HTMLDivElement>(null);
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
   // Stabiele callback, gedeeld door onSubmit (retry) en ClearSubmitErrorOnChange.
   const clearSubmitError = useCallback(() => setSubmitError(false), []);
+  // Sluit de banner expliciet (Escape of de knop) en breng de focus terug
+  // naar de submit-knop — maar alleen als die op dat moment in de banner lag.
+  // Was de focus elders (bijv. in een veld), dan blijft die gewoon staan.
+  const closeSubmitError = useCallback(() => {
+    setSubmitError(false);
+    if (submitErrorRef.current?.contains(document.activeElement)) {
+      requestAnimationFrame(() => submitButtonRef.current?.focus());
+    }
+  }, []);
 
   // Verplaats de focus naar de foutbanner zodat toetsenbordgebruikers direct
   // "Opnieuw proberen" of "Sluiten" kunnen bereiken.
@@ -65,11 +75,11 @@ const Forum: FC = () => {
   useEffect(() => {
     if (!submitError) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") clearSubmitError();
+      if (event.key === "Escape") closeSubmitError();
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [submitError, clearSubmitError]);
+  }, [submitError, closeSubmitError]);
 
   const returnToForm = (restore: boolean) => {
     // Kopieer de inzending, zodat een eventuele latere mutatie van values de
@@ -117,9 +127,10 @@ const Forum: FC = () => {
             onSubmit={async (values, { setSubmitting, resetForm }) => {
               // Formik zet isSubmitting zelf al op true vóór onSubmit én
               // blokkeert dubbel-submit natively in handleSubmit (plus: de
-              // knop is tijdens submit disabled). Alleen de foutmelding van
-              // een eerdere poging hoort hier gereset te worden.
-              clearSubmitError();
+              // knop is tijdens submit disabled).
+              // De foutbanner blijft bewust zichtbaar tijdens een retry:
+              // direct wissen zou de gefocuste "Opnieuw proberen"-knop
+              // unmounten en de focus naar het body-element laten vallen.
               try {
                 await submitForm(values);
               } catch {
@@ -130,6 +141,10 @@ const Forum: FC = () => {
               } finally {
                 setSubmitting(false);
               }
+              // Pas bij succes de foutmelding wissen, vóór de switch naar het
+              // succes-scherm (anders zou de banner bij "Terug naar mijn
+              // formulier" weer verschijnen).
+              clearSubmitError();
               // Bewaar de inzending zodat het succes-scherm een terugblik
               // toont en "Terug naar mijn formulier" de waarden herstelt.
               setLastSubmission(values);
@@ -208,13 +223,13 @@ const Forum: FC = () => {
                         </p>
                       </div>
                       <div className="mt-3 flex flex-wrap justify-end gap-2">
-                        <button type="submit" className={dangerButton}>
+                        <button type="submit" disabled={isSubmitting} className={dangerButton}>
                           <FaRedo className="text-xs" aria-hidden="true" />
                           Opnieuw proberen
                         </button>
                         <button
                           type="button"
-                          onClick={() => setSubmitError(false)}
+                          onClick={closeSubmitError}
                           className={secondaryButton}
                         >
                           Sluiten
@@ -223,7 +238,9 @@ const Forum: FC = () => {
                     </div>
                   )}
 
-                  <SubmitButton isSubmitting={isSubmitting}>Verzenden</SubmitButton>
+                  <SubmitButton submitButtonRef={submitButtonRef} isSubmitting={isSubmitting}>
+                    Verzenden
+                  </SubmitButton>
 
                   {/* Debug-paneel: alleen zichtbaar in development, niet in productie. */}
                   {import.meta.env.DEV && <LiveValues values={values} />}

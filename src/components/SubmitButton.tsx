@@ -1,15 +1,17 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, RefObject } from "react";
 import { FaPaperPlane, FaSpinner } from "react-icons/fa";
 import { primaryButton } from "../utils/buttonClasses";
 
 interface SubmitButtonProps {
   isSubmitting: boolean;
   children: ReactNode;
+  submitButtonRef?: RefObject<HTMLButtonElement | null>;
 }
 
-const SubmitButton: FC<SubmitButtonProps> = ({ isSubmitting, children }) => {
+const SubmitButton: FC<SubmitButtonProps> = ({ isSubmitting, children, submitButtonRef }) => {
   return (
     <button
+      ref={submitButtonRef}
       type="submit"
       disabled={isSubmitting}
       aria-busy={isSubmitting || undefined}

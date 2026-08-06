@@ -1,7 +1,8 @@
 import { FC, useEffect, useRef } from "react";
 import { FaArrowLeft, FaCheck } from "react-icons/fa";
 import { primaryButton, secondaryButtonStrong } from "../utils/buttonClasses";
-import { cookieOptions, FormValues, getOptionLabel, yoghurtOptions } from "../utils/formUtils";
+import { FormValues } from "../utils/formUtils";
+import SubmissionSummary from "./SubmissionSummary";
 
 interface SuccessMessageProps {
   /** De laatst succesvol ingezonden waarden, getoond als terugblik. */
@@ -50,41 +51,7 @@ const SuccessMessage: FC<SuccessMessageProps> = ({ lastSubmission, onBackToForm,
         <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/60">
           Jouw inzending
         </p>
-        <dl className="space-y-2.5 text-sm">
-          <div className="flex items-center justify-between gap-4">
-            <dt className="text-white/60">Naam</dt>
-            <dd className="truncate font-medium text-white/90">{lastSubmission.name}</dd>
-          </div>
-          <div className="flex items-center justify-between gap-4">
-            <dt className="text-white/60">E-mail</dt>
-            <dd className="truncate font-medium text-white/90">{lastSubmission.email}</dd>
-          </div>
-          <div className="flex items-center justify-between gap-4">
-            <dt className="text-white/60">Lang</dt>
-            <dd className="font-medium text-white/90">{lastSubmission.isTall ? "Ja" : "Nee"}</dd>
-          </div>
-          <div className="flex items-center justify-between gap-4">
-            <dt className="text-white/60">Koekjes</dt>
-            <dd className="flex flex-wrap justify-end gap-1.5">
-              {lastSubmission.cookies.map((cookie) => (
-                <span
-                  key={cookie}
-                  className="rounded-full bg-primary-500/15 px-2.5 py-0.5 text-xs text-primary-200"
-                >
-                  {getOptionLabel(cookieOptions, cookie)}
-                </span>
-              ))}
-            </dd>
-          </div>
-          <div className="flex items-center justify-between gap-4">
-            <dt className="text-white/60">Yoghurt</dt>
-            <dd className="font-medium text-white/90">
-              {lastSubmission.yoghurt
-                ? getOptionLabel(yoghurtOptions, lastSubmission.yoghurt)
-                : "—"}
-            </dd>
-          </div>
-        </dl>
+        <SubmissionSummary values={lastSubmission} />
       </div>
 
       <div className="mt-8 flex animate-fade-in-up flex-col gap-3 [animation-delay:350ms]">

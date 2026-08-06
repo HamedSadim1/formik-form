@@ -1,5 +1,5 @@
-import { useField } from "formik";
-import { FC } from "react";
+import { useField, useFormikContext } from "formik";
+import { FC, useEffect } from "react";
 import FieldGroup from "./FieldGroup";
 import OptionChip from "./OptionChip";
 
@@ -31,8 +31,16 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({
   columns = 2,
   required = true,
 }) => {
-  const [, meta] = useField<string[]>(name);
+  const [field, meta] = useField<string[]>(name);
+  const { validateField } = useFormikContext();
   const showError = Boolean(meta.touched && meta.error);
+
+  useEffect(() => {
+    // validateOnChange={false} laat een foutmelding anders staan tot de
+    // volgende submit; zodra de selectie wijzigt ná een fout, direct
+    // hervalideren zodat de (inmiddels geldige) selectie de fout opruimt.
+    if (meta.touched && meta.error) void validateField(name);
+  }, [field.value, name, meta.touched, meta.error, validateField]);
 
   return (
     <FieldGroup

@@ -1,5 +1,5 @@
 import { useField } from "formik";
-import { FC, Ref } from "react";
+import { FC, RefObject } from "react";
 import { FaExclamationCircle } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { FormValues } from "../utils/formUtils";
@@ -14,7 +14,7 @@ interface FormFieldProps {
   autoComplete?: string;
   required?: boolean;
   maxLength?: number;
-  inputRef?: Ref<HTMLInputElement>;
+  inputRef?: RefObject<HTMLInputElement | null>;
 }
 
 const FormField: FC<FormFieldProps> = ({

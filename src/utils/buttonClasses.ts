@@ -1,7 +1,7 @@
 /**
  * Gedeelde button-styling (Tailwind class-strings), zodat primaire/danger/
  * secundaire knoppen in SubmitButton, SuccessMessage en de foutbanner één
- * bron van waarheid hebben. Grootte- en layoutvariaties blijven per gebruiker.
+ * bron van waarheid hebben. Grootte- en layoutvariaties blijven per gebruik.
  */
 
 /**
@@ -14,7 +14,7 @@ export const primaryButton =
 
 /** Gevaar-variant — "Opnieuw proberen" in de foutbanner. */
 export const dangerButton =
-  "inline-flex items-center gap-2 rounded-xl border border-danger-400/40 bg-danger-500/20 px-4 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-danger-500/30 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger-400/40";
+  "inline-flex items-center gap-2 rounded-xl border border-danger-400/40 bg-danger-500/20 px-4 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-danger-500/30 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger-400/40 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-danger-500/20";
 
 /** Secundaire glas-variant — "Sluiten" in de foutbanner. */
 export const secondaryButton =
