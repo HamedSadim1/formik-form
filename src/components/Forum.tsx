@@ -1,7 +1,7 @@
 import { Form, Formik } from "formik";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { FaEnvelope, FaUser } from "react-icons/fa";
-import { submitForm } from "../services/forumApi";
+import { submitForm } from "@/services/forumApi";
 import {
   EMPTY_FORM_VALUES,
   FIELD_NAMES,
@@ -11,18 +11,18 @@ import {
   PAGE_BADGE_TEXT,
   PAGE_SUBTITLE,
   PAGE_TITLE,
-} from "../utils/constants";
-import { cookieOptions, validationSchema, yoghurtOptions } from "../utils/formUtils";
-import ClearSubmitErrorOnChange from "./ClearSubmitErrorOnChange";
-import FormField from "./FormField";
-import FormHeader from "./FormHeader";
-import LiveValues from "./LiveValues";
-import OptionGroup from "./OptionGroup";
-import ScrollToFirstError from "./ScrollToFirstError";
-import SubmitButton from "./SubmitButton";
-import SubmitErrorBanner from "./SubmitErrorBanner";
-import SuccessMessage from "./SuccessMessage";
-import ToggleSwitch from "./ToggleSwitch";
+} from "@/utils/constants";
+import { cookieOptions, validationSchema, yoghurtOptions } from "@/utils/formUtils";
+import ClearSubmitErrorOnChange from "@/components/ClearSubmitErrorOnChange";
+import FormField from "@/components/FormField";
+import FormHeader from "@/components/FormHeader";
+import LiveValues from "@/components/LiveValues";
+import OptionGroup from "@/components/OptionGroup";
+import ScrollToFirstError from "@/components/ScrollToFirstError";
+import SubmitButton from "@/components/SubmitButton";
+import SubmitErrorBanner from "@/components/SubmitErrorBanner";
+import SuccessMessage from "@/components/SuccessMessage";
+import ToggleSwitch from "@/components/ToggleSwitch";
 
 const Forum: FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);

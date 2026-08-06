@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { FIELD_NAMES, LABELS, NAME_MAX_LENGTH } from "./constants";
+import { FIELD_NAMES, LABELS, NAME_MAX_LENGTH } from "@/utils/constants";
 
 /** Formulierdomein: validatieschema, optie-data en het Option-type. */
 

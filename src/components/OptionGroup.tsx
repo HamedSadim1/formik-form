@@ -1,9 +1,9 @@
 import { useField, useFormikContext } from "formik";
 import { FC, useEffect } from "react";
-import { Option } from "../utils/formUtils";
-import { optionColumnClasses, OptionColumns } from "../utils/uiClasses";
-import FieldGroup from "./FieldGroup";
-import OptionChip from "./OptionChip";
+import { Option } from "@/utils/formUtils";
+import { optionColumnClasses, OptionColumns } from "@/utils/uiClasses";
+import FieldGroup from "@/components/FieldGroup";
+import OptionChip from "@/components/OptionChip";
 
 interface OptionGroupProps {
   name: string;

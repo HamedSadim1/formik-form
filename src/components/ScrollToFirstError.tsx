@@ -1,7 +1,7 @@
 import { useFormikContext } from "formik";
 import { FC, useEffect, useRef } from "react";
-import { FIELD_ORDER, FormValues } from "../utils/constants";
-import { fieldGroupId, fieldId } from "../utils/helpers";
+import { FIELD_ORDER, FormValues } from "@/utils/constants";
+import { fieldGroupId, fieldId } from "@/utils/helpers";
 
 /**
  * Geeft na een mislukte submit de focus aan het eerste ongeldige veld en

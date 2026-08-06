@@ -1,11 +1,11 @@
 import { useField } from "formik";
 import { FC, RefObject } from "react";
 import { IconType } from "react-icons";
-import { FormValues, NEAR_LIMIT_RATIO } from "../utils/constants";
-import { fieldErrorId, fieldId } from "../utils/helpers";
-import { sectionLabel } from "../utils/uiClasses";
-import FieldError from "./FieldError";
-import RequiredAsterisk from "./RequiredAsterisk";
+import { FormValues, NEAR_LIMIT_RATIO } from "@/utils/constants";
+import { fieldErrorId, fieldId } from "@/utils/helpers";
+import { sectionLabel } from "@/utils/uiClasses";
+import FieldError from "@/components/FieldError";
+import RequiredAsterisk from "@/components/RequiredAsterisk";
 
 interface FormFieldProps {
   /** Alleen tekstvelden, geen booleans — anders zou field.value.length crashen. */

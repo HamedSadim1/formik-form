@@ -1,6 +1,6 @@
 import { useField } from "formik";
 import { FC } from "react";
-import { glassPanelHover } from "../utils/uiClasses";
+import { glassPanelHover } from "@/utils/uiClasses";
 
 interface ToggleSwitchProps {
   /** Formik-veldnaam van het (boolean) checkbox-veld. */

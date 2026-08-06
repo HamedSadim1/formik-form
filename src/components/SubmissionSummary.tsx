@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
-import { EMPTY_VALUE, FIELD_NAMES, FormValues, LABELS } from "../utils/constants";
-import { getOptionLabel } from "../utils/helpers";
-import { cookieOptions, yoghurtOptions } from "../utils/formUtils";
+import { EMPTY_VALUE, FIELD_NAMES, FormValues, LABELS } from "@/utils/constants";
+import { getOptionLabel } from "@/utils/helpers";
+import { cookieOptions, yoghurtOptions } from "@/utils/formUtils";
 
 interface SummaryRowProps {
   label: string;

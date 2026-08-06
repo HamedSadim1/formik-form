@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { FaChevronDown } from "react-icons/fa";
-import { FormValues, LABELS } from "../utils/constants";
-import { glassPanelBlur } from "../utils/uiClasses";
-import SubmissionSummary from "./SubmissionSummary";
+import { FormValues, LABELS } from "@/utils/constants";
+import { glassPanelBlur } from "@/utils/uiClasses";
+import SubmissionSummary from "@/components/SubmissionSummary";
 
 interface LiveValuesProps {
   values: FormValues;

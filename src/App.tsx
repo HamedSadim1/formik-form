@@ -1,5 +1,5 @@
-import Forum from "./components/Forum";
-import { PAGE_TITLE_ID } from "./utils/constants";
+import Forum from "@/components/Forum";
+import { PAGE_TITLE_ID } from "@/utils/constants";
 
 function App() {
   // main-landmark: geeft screenreader-gebruikers een directe sprong naar de

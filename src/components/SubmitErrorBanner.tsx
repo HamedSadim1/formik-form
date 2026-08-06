@@ -1,7 +1,7 @@
 import { FC, RefObject } from "react";
 import { FaExclamationTriangle, FaRedo } from "react-icons/fa";
-import { LABELS } from "../utils/constants";
-import { dangerButton, secondaryButton } from "../utils/uiClasses";
+import { LABELS } from "@/utils/constants";
+import { dangerButton, secondaryButton } from "@/utils/uiClasses";
 
 interface SubmitErrorBannerProps {
   /** Ref op de banner zelf: ontvangt de focus na een mislukte submit. */

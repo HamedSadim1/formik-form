@@ -1,5 +1,5 @@
-import { FormValues, SIMULATED_LATENCY_MS } from "../utils/constants";
-import { getFailureRate, wait } from "../utils/helpers";
+import { FormValues, SIMULATED_LATENCY_MS } from "@/utils/constants";
+import { getFailureRate, wait } from "@/utils/helpers";
 
 /**
  * Verstuurt het formulier. Dit is de enige plek die later vervangen wordt door

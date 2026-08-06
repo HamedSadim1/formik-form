@@ -1,8 +1,8 @@
 import { FC, ReactNode } from "react";
-import { fieldGroupErrorId, fieldGroupId } from "../utils/helpers";
-import { sectionLabel } from "../utils/uiClasses";
-import FieldError from "./FieldError";
-import RequiredAsterisk from "./RequiredAsterisk";
+import { fieldGroupErrorId, fieldGroupId } from "@/utils/helpers";
+import { sectionLabel } from "@/utils/uiClasses";
+import FieldError from "@/components/FieldError";
+import RequiredAsterisk from "@/components/RequiredAsterisk";
 
 interface FieldGroupProps {
   name: string;

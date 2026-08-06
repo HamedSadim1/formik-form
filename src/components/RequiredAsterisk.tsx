@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { LABELS } from "../utils/constants";
+import { LABELS } from "@/utils/constants";
 
 interface RequiredAsteriskProps {
   /** Extra klassen (bijv. marge vóór de ster). */

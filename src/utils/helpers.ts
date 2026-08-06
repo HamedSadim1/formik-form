@@ -6,7 +6,7 @@ import {
   FAIL_PARAM,
   FAIL_PARAM_ALWAYS,
   FAIL_PARAM_NEVER,
-} from "./constants";
+} from "@/utils/constants";
 
 /**
  * Centrale helpers — herbruikbare functies gegroepeerd per domein, zonder

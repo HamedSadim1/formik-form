@@ -1,7 +1,7 @@
 import { FC, ReactNode, RefObject } from "react";
 import { FaPaperPlane, FaSpinner } from "react-icons/fa";
-import { LABELS } from "../utils/constants";
-import { primaryButton } from "../utils/uiClasses";
+import { LABELS } from "@/utils/constants";
+import { primaryButton } from "@/utils/uiClasses";
 
 interface SubmitButtonProps {
   isSubmitting: boolean;

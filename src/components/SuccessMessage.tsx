@@ -1,14 +1,14 @@
 import { FC, useEffect, useRef } from "react";
 import { FaArrowLeft, FaCheck } from "react-icons/fa";
-import { FormValues, LABELS } from "../utils/constants";
-import { fadeDelay } from "../utils/helpers";
+import { FormValues, LABELS } from "@/utils/constants";
+import { fadeDelay } from "@/utils/helpers";
 import {
   glassPanelBlur,
   primaryButton,
   secondaryButtonStrong,
   sectionLabel,
-} from "../utils/uiClasses";
-import SubmissionSummary from "./SubmissionSummary";
+} from "@/utils/uiClasses";
+import SubmissionSummary from "@/components/SubmissionSummary";
 
 interface SuccessMessageProps {
   /** De laatst succesvol ingezonden waarden, getoond als terugblik. */
