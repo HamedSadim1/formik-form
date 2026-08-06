@@ -1,6 +1,7 @@
 import { useField, useFormikContext } from "formik";
 import { FC, useEffect } from "react";
 import { Option } from "../utils/formUtils";
+import { optionColumnClasses, OptionColumns } from "../utils/uiClasses";
 import FieldGroup from "./FieldGroup";
 import OptionChip from "./OptionChip";
 
@@ -11,17 +12,9 @@ interface OptionGroupProps {
   type: "checkbox" | "radio";
   options: Option[];
   /** Alleen voor checkbox: aantal kolommen (vanaf het sm-breakpoint). */
-  columns?: 1 | 2 | 3;
+  columns?: OptionColumns;
   required?: boolean;
 }
-
-// Op mobiel altijd één kolom, zodat labels niet in smalle chips klemmen;
-// vanaf het sm-breakpoint wordt het opgegeven aantal kolommen gebruikt.
-const columnClasses: Record<NonNullable<OptionGroupProps["columns"]>, string> = {
-  1: "grid-cols-1",
-  2: "grid-cols-1 sm:grid-cols-2",
-  3: "grid-cols-1 sm:grid-cols-3",
-};
 
 /**
  * Gedeelde optie-groep voor checkbox- én radioselecties: verzorgt de
@@ -58,7 +51,7 @@ const OptionGroup: FC<OptionGroupProps> = ({
     >
       <div
         className={`${
-          type === "checkbox" ? `grid ${columnClasses[columns]} gap-2.5` : "space-y-2.5"
+          type === "checkbox" ? `grid ${optionColumnClasses[columns]} gap-2.5` : "space-y-2.5"
         } rounded-xl ring-1 transition-all duration-200 ${
           showError ? "ring-danger-400/60" : "ring-transparent"
         }`}

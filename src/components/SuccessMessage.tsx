@@ -1,6 +1,7 @@
-import { CSSProperties, FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import { FaArrowLeft, FaCheck } from "react-icons/fa";
-import { FADE_STAGGER_MS, FADE_START_MS, FormValues } from "../utils/constants";
+import { FormValues, LABELS } from "../utils/constants";
+import { fadeDelay } from "../utils/helpers";
 import {
   glassPanelBlur,
   primaryButton,
@@ -8,15 +9,6 @@ import {
   sectionLabel,
 } from "../utils/uiClasses";
 import SubmissionSummary from "./SubmissionSummary";
-
-// Opbouwende fade-cascade op het succes-scherm: elke stap start 50ms later.
-// Inline animationDelay i.p.v. Tailwind-arbitrary-klassen: Tailwinds scanner
-// zou de dynamisch gebouwde `[animation-delay:...ms]`-klasse niet kunnen
-// extraheren, dus de delay komt via style — met dezelfde gecentraliseerde
-// constanten (constants.ts) als bron van waarheid.
-const fadeDelay = (step: number): CSSProperties => ({
-  animationDelay: `${FADE_START_MS + step * FADE_STAGGER_MS}ms`,
-});
 
 interface SuccessMessageProps {
   /** De laatst succesvol ingezonden waarden, getoond als terugblik. */
@@ -55,10 +47,10 @@ const SuccessMessage: FC<SuccessMessageProps> = ({ lastSubmission, onBackToForm,
           style={fadeDelay(0)}
           className="mb-2 animate-fade-in-up text-2xl font-semibold text-white outline-none"
         >
-          Bedankt voor je inzending!
+          {LABELS.success.heading}
         </h2>
         <p style={fadeDelay(2)} className="animate-fade-in-up text-white/80">
-          We nemen spoedig contact met je op.
+          {LABELS.success.body}
         </p>
       </div>
 
@@ -66,7 +58,7 @@ const SuccessMessage: FC<SuccessMessageProps> = ({ lastSubmission, onBackToForm,
         style={fadeDelay(3)}
         className={`mx-auto mt-6 max-w-sm animate-fade-in-up ${glassPanelBlur} p-4 text-left`}
       >
-        <p className={`mb-3 ${sectionLabel}`}>Jouw inzending</p>
+        <p className={`mb-3 ${sectionLabel}`}>{LABELS.success.summarySection}</p>
         <SubmissionSummary values={lastSubmission} />
       </div>
 
@@ -76,10 +68,10 @@ const SuccessMessage: FC<SuccessMessageProps> = ({ lastSubmission, onBackToForm,
             aria-hidden="true"
             className="text-xs transition-transform duration-200 group-hover:-translate-x-0.5"
           />
-          Terug naar mijn formulier
+          {LABELS.buttons.backToForm}
         </button>
         <button type="button" onClick={onReset} className={secondaryButtonStrong}>
-          Opnieuw invullen
+          {LABELS.buttons.reset}
         </button>
       </div>
     </div>

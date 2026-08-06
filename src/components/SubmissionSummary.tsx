@@ -1,6 +1,7 @@
 import { FC, ReactNode } from "react";
-import { EMPTY_VALUE, FormValues } from "../utils/constants";
-import { cookieOptions, getOptionLabel, yoghurtOptions } from "../utils/formUtils";
+import { EMPTY_VALUE, FIELD_NAMES, FormValues, LABELS } from "../utils/constants";
+import { getOptionLabel } from "../utils/helpers";
+import { cookieOptions, yoghurtOptions } from "../utils/formUtils";
 
 interface SummaryRowProps {
   label: string;
@@ -35,14 +36,25 @@ interface SubmissionSummaryProps {
 const SubmissionSummary: FC<SubmissionSummaryProps> = ({ values }) => {
   return (
     <dl className="space-y-2.5 text-sm">
-      <SummaryRow label="Naam" ddClassName="truncate font-medium text-white/90">
+      <SummaryRow
+        label={LABELS.summary[FIELD_NAMES.name]}
+        ddClassName="truncate font-medium text-white/90"
+      >
         {values.name || EMPTY_VALUE}
       </SummaryRow>
-      <SummaryRow label="E-mail" ddClassName="truncate font-medium text-white/90">
+      <SummaryRow
+        label={LABELS.summary[FIELD_NAMES.email]}
+        ddClassName="truncate font-medium text-white/90"
+      >
         {values.email || EMPTY_VALUE}
       </SummaryRow>
-      <SummaryRow label="Lang">{values.isTall ? "Ja" : "Nee"}</SummaryRow>
-      <SummaryRow label="Koekjes" ddClassName="flex flex-wrap justify-end gap-1.5">
+      <SummaryRow label={LABELS.summary[FIELD_NAMES.isTall]}>
+        {values.isTall ? LABELS.summary.yes : LABELS.summary.no}
+      </SummaryRow>
+      <SummaryRow
+        label={LABELS.summary[FIELD_NAMES.cookies]}
+        ddClassName="flex flex-wrap justify-end gap-1.5"
+      >
         {values.cookies.length > 0 ? (
           values.cookies.map((cookie) => (
             <span
@@ -56,7 +68,7 @@ const SubmissionSummary: FC<SubmissionSummaryProps> = ({ values }) => {
           <span className="font-medium text-white/90">{EMPTY_VALUE}</span>
         )}
       </SummaryRow>
-      <SummaryRow label="Yoghurt">
+      <SummaryRow label={LABELS.summary[FIELD_NAMES.yoghurt]}>
         {values.yoghurt ? getOptionLabel(yoghurtOptions, values.yoghurt) : EMPTY_VALUE}
       </SummaryRow>
     </dl>

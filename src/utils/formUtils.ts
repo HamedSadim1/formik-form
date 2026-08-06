@@ -1,15 +1,7 @@
 import * as Yup from "yup";
 import { FIELD_NAMES, LABELS, NAME_MAX_LENGTH } from "./constants";
 
-/**
- * Id-conventies voor formuliervelden en -groepen, als één bron van waarheid.
- * FormField, FieldGroup en ScrollToFirstError bouwen hierop voort, zodat een
- * wijziging van het patroon nergens anders stilletjes kan breken.
- */
-export const fieldId = (name: string) => `field-${name}`;
-export const fieldErrorId = (name: string) => `${fieldId(name)}-error`;
-export const fieldGroupId = (name: string) => `field-group-${name}`;
-export const fieldGroupErrorId = (name: string) => `${fieldGroupId(name)}-error`;
+/** Formulierdomein: validatieschema, optie-data en het Option-type. */
 
 export const validationSchema = Yup.object({
   [FIELD_NAMES.name]: Yup.string()
@@ -40,7 +32,3 @@ export const yoghurtOptions: Option[] = [
   { value: "blueberry", label: "Blauwe bes" },
   { value: "apple", label: "Appel" },
 ];
-
-/** Vertaalt een opgeslagen waarde terug naar het leesbare label; valt terug op de waarde zelf. */
-export const getOptionLabel = (options: readonly Option[], value: string): string =>
-  options.find((option) => option.value === value)?.label ?? value;

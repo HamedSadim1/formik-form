@@ -103,6 +103,44 @@ export const LABELS = {
     cookiesMin: "Selecteer minstens één koekje",
     yoghurtRequired: "Kies een yoghurtsoort",
   },
+  /** Knopteksten. */
+  buttons: {
+    submit: "Verzenden",
+    submitBusy: "Verzenden...",
+    retry: "Opnieuw proberen",
+    close: "Sluiten",
+    backToForm: "Terug naar mijn formulier",
+    reset: "Opnieuw invullen",
+  },
+  /** Teksten op het succes-scherm. */
+  success: {
+    heading: "Bedankt voor je inzending!",
+    body: "We nemen spoedig contact met je op.",
+    summarySection: "Jouw inzending",
+  },
+  /** Teksten in de submit-foutbanner. */
+  errorBanner: {
+    title: "Verzenden mislukt.",
+    message: "Er is iets misgegaan bij het verzenden van je formulier. Probeer het opnieuw.",
+  },
+  /** Rijlabels van het samenvattingspaneel (korte varianten van de veldlabels). */
+  summary: {
+    [FIELD_NAMES.name]: "Naam",
+    [FIELD_NAMES.email]: "E-mail",
+    [FIELD_NAMES.isTall]: "Lang",
+    [FIELD_NAMES.cookies]: "Koekjes",
+    [FIELD_NAMES.yoghurt]: "Yoghurt",
+    yes: "Ja",
+    no: "Nee",
+  },
+  /** Kop van het dev-only debug-paneel. */
+  devPanel: {
+    heading: "Huidige waarden",
+  },
+  /** Toegankelijkheidscopy (sr-only aankondigingen). */
+  a11y: {
+    requiredLabel: "(verplicht)",
+  },
 } as const;
 
 /* ===== API-simulatie (forumApi) ===== */

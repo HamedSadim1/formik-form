@@ -16,15 +16,15 @@ export const primaryButton =
 /** Sectielabels: veldlabels, groeps-legends en sectiekopjes (uppercase-stijl). */
 export const sectionLabel = "text-xs font-semibold uppercase tracking-wider text-white/60";
 
-/** Gevaar-variant — "Opnieuw proberen" in de foutbanner. */
+/** Gevaar-variant — de retry-knop in de foutbanner. */
 export const dangerButton =
   "inline-flex items-center gap-2 rounded-xl border border-danger-400/40 bg-danger-500/20 px-4 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-danger-500/30 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger-400/40 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-danger-500/20";
 
-/** Secundaire glas-variant — "Sluiten" in de foutbanner. */
+/** Secundaire glas-variant — de sluit-knop in de foutbanner. */
 export const secondaryButton =
   "rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white/80 transition duration-200 hover:bg-white/20 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50";
 
-/** Steviger glas-variant — "Opnieuw invullen" op het succes-scherm. */
+/** Steviger glas-variant — de reset-knop op het succes-scherm. */
 export const secondaryButtonStrong =
   "w-full rounded-xl border border-white/40 bg-white/30 px-6 py-3 font-semibold text-white backdrop-blur-sm transition duration-200 hover:bg-white/40 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70";
 
@@ -37,3 +37,19 @@ export const glassPanelBlur = `${glassPanel} backdrop-blur-sm`;
 
 /** Interactief glazen paneel (hover-staten) — gebruikt voor klikbare rijen. */
 export const glassPanelHover = `${glassPanel} transition-all duration-200 hover:border-white/25 hover:bg-white/10`;
+
+/* ===== Optiegroepen ===== */
+
+/** Aantal kolommen voor een checkbox-optiegroep (vanaf het sm-breakpoint). */
+export type OptionColumns = 1 | 2 | 3;
+
+/**
+ * Grid-klassen per kolom-aantal voor checkbox-optiegroepen. Op mobiel altijd
+ * één kolom, zodat labels niet in smalle chips klemmen; vanaf het
+ * sm-breakpoint wordt het opgegeven aantal kolommen gebruikt.
+ */
+export const optionColumnClasses: Record<OptionColumns, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-1 sm:grid-cols-2",
+  3: "grid-cols-1 sm:grid-cols-3",
+};

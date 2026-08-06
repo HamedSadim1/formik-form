@@ -1,5 +1,6 @@
 import { FC, RefObject } from "react";
 import { FaExclamationTriangle, FaRedo } from "react-icons/fa";
+import { LABELS } from "../utils/constants";
 import { dangerButton, secondaryButton } from "../utils/uiClasses";
 
 interface SubmitErrorBannerProps {
@@ -25,17 +26,17 @@ const SubmitErrorBanner: FC<SubmitErrorBannerProps> = ({ bannerRef, isSubmitting
     <div className="flex items-start gap-3">
       <FaExclamationTriangle className="mt-0.5 shrink-0 text-danger-400" aria-hidden="true" />
       <p role="alert" className="flex-1 text-sm text-danger-300">
-        <span className="font-semibold">Verzenden mislukt.</span> Er is iets misgegaan bij het
-        verzenden van je formulier. Probeer het opnieuw.
+        <span className="font-semibold">{LABELS.errorBanner.title}</span>{" "}
+        {LABELS.errorBanner.message}
       </p>
     </div>
     <div className="mt-3 flex flex-wrap justify-end gap-2">
       <button type="submit" disabled={isSubmitting} className={dangerButton}>
         <FaRedo className="text-xs" aria-hidden="true" />
-        Opnieuw proberen
+        {LABELS.buttons.retry}
       </button>
       <button type="button" onClick={onClose} className={secondaryButton}>
-        Sluiten
+        {LABELS.buttons.close}
       </button>
     </div>
   </div>

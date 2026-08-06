@@ -1,5 +1,6 @@
 import { FC, ReactNode, RefObject } from "react";
 import { FaPaperPlane, FaSpinner } from "react-icons/fa";
+import { LABELS } from "../utils/constants";
 import { primaryButton } from "../utils/uiClasses";
 
 interface SubmitButtonProps {
@@ -20,7 +21,7 @@ const SubmitButton: FC<SubmitButtonProps> = ({ isSubmitting, children, submitBut
       {isSubmitting ? (
         <>
           <FaSpinner className="animate-spin" aria-hidden="true" />
-          <span>Verzenden...</span>
+          <span>{LABELS.buttons.submitBusy}</span>
         </>
       ) : (
         <>

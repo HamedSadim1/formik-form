@@ -173,7 +173,7 @@ const Forum: FC = () => {
                   )}
 
                   <SubmitButton submitButtonRef={submitButtonRef} isSubmitting={isSubmitting}>
-                    Verzenden
+                    {LABELS.buttons.submit}
                   </SubmitButton>
 
                   {/* Debug-paneel: alleen zichtbaar in development, niet in productie. */}
