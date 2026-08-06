@@ -1,4 +1,6 @@
+import { clsx, type ClassValue } from "clsx";
 import type { CSSProperties } from "react";
+import { twMerge } from "tailwind-merge";
 import {
   DEFAULT_FAILURE_RATE,
   FADE_STAGGER_MS,
@@ -29,16 +31,13 @@ export const fieldGroupErrorId = (name: string): string => `${fieldGroupId(name)
 
 /* ===== ClassNames ===== */
 
-/** Waarden die cn() combineert; falsy waarden worden overgeslagen. */
-export type ClassValue = string | false | null | undefined;
-
 /**
- * Combineert Tailwind-klassen tot één string — dependency-vrije variant van
- * clsx. Falsy waarden (false/null/undefined) worden overgeslagen, zodat
- * conditionele klassen zonder template-literal-interpolatie kunnen.
+ * Combineert Tailwind-klassen tot één string. clsx filtert falsy waarden
+ * (false/null/undefined) en arrays/flat-objecten, waarna tailwind-merge
+ * conflicterende klassen laat winnen (bijv. de laatste `p-4` boven `p-2`),
+ * zodat conditionele overrides niet stilletjes kunnen botsen.
  */
-export const cn = (...classes: ClassValue[]): string =>
-  classes.filter((value): value is string => Boolean(value)).join(" ");
+export const cn = (...inputs: ClassValue[]): string => twMerge(clsx(inputs));
 
 /* ===== Opmaak ===== */
 
